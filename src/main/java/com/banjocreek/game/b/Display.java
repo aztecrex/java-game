@@ -44,7 +44,7 @@ public final class Display extends JPanel {
 	private final Shape element(GameObject obj) {
 		final AffineTransform x = new AffineTransform();
 		// IN REVERSE OF APPLICATION
-		x.translate(obj.posX, obj.posY);
+		x.translate(obj.position.getX(), obj.position.getY());
 		x.scale(obj.size, obj.size);
 		return x.createTransformedShape(model);
 	}

@@ -12,7 +12,7 @@ public final class GameWorld {
 	
 	public GameWorld() {
 		
-		this.gameObjects.addAll( IntStream.range(-2, 3)
+		this.gameObjects.addAll( IntStream.range(-2,3)
 			.mapToDouble(n -> n * .6)
 			.mapToObj(p -> new GameObject(p,p))
 			.collect(Collectors.toList()));
@@ -20,6 +20,10 @@ public final class GameWorld {
 	
 	public Stream<GameObject> gameObjects() {
 		return gameObjects.stream();
+	}
+
+	public void update(long tick, double dt) {
+		gameObjects.forEach(o -> o.update(dt));
 	}
 	
 	
