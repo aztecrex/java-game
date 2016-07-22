@@ -5,11 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
@@ -26,6 +31,7 @@ public final class Display extends JPanel {
 		this.world = world;
 		addComponentListener(listener);
 		setPreferredSize(new Dimension(300,200));
+		addMouseListener(mouser);
 	}
 
 	private static final Stroke hudStroke;
@@ -71,9 +77,19 @@ public final class Display extends JPanel {
 	final ComponentListener listener = new ComponentAdapter() {
 		public void componentResized(java.awt.event.ComponentEvent e) {
 			view.withSize(e.getComponent().getSize());
+			Display.this.repaint();
 		}
 	};
 
-	
+	final MouseListener mouser = new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			Point clicked = e.getPoint();
+			System.out.println("clicked " + clicked);
+			Point2D world = view.world(clicked);
+			System.out.println("world " + world);
+			view.withCamera(world);
+			Display.this.repaint();
+		};
+	};
 	
 }

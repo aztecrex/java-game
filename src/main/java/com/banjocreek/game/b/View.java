@@ -3,6 +3,7 @@ package com.banjocreek.game.b;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
@@ -13,8 +14,8 @@ public class View {
 	private Point2D camera = new Point2D.Double();
 	private double field = 5; // meters to display
 
-	public View withCamera(double x, double y) {
-		this.camera.setLocation(x, y);
+	public View withCamera(Point2D where) {
+		this.camera.setLocation(where);
 		return this;
 	}
 	
@@ -29,19 +30,31 @@ public class View {
 		return this;
 	}
 	
-	public Shape project(Shape obj) {
-		
+	public Point2D world(Point2D device) {
+		try {
+			return projection().inverseTransform(device, null);
+		} catch (NoninvertibleTransformException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("this handler doesn't provide any value");
+		}
+	}
+	
+	private AffineTransform projection() {
 		final double scale = Math.min(displayW, displayH)/field;
 		final double pageX = displayW/scale;
 		final double pageY = displayH/scale;
 
 		AffineTransform projection = new AffineTransform();
 			// THESE ARE IN REVERSE ORDER OF APPLICATION
-		projection.scale(scale,-scale); 		// 3. scale the whole thing
-		projection.translate(0, -pageY);  		// 2. move down a whole page because of flipped origin
-		projection.translate(pageX/2, pageY/2); // 1. center the view on the origin (TODO use camera)
-		
-		return projection.createTransformedShape(obj);
+		projection.scale(scale,-scale); 						// 4. scale the whole thing
+		projection.translate(0, -pageY);  						// 3. move down a whole page because of flipped origin
+		projection.translate(pageX/2, pageY/2); 				// 2. center
+		projection.translate(-camera.getX(), -camera.getY());	// 1. adjust for camera
+		return projection;
+	}
+	
+	public Shape project(Shape obj) {
+		return projection().createTransformedShape(obj);
 	}
 	
 	public Shape cross() {
@@ -53,6 +66,8 @@ public class View {
 		c2d.lineTo(0, extent);
 		return c2d;
 	}
+
+	
 	
 	
 }
