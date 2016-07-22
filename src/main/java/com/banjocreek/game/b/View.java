@@ -44,7 +44,7 @@ public class View {
 		return projection.createTransformedShape(obj);
 	}
 	
-	public Shape hud() {
+	public Shape cross() {
 		final Path2D c2d = new Path2D.Double();
 		final double extent = field/2;
 		c2d.moveTo(-extent, 0);

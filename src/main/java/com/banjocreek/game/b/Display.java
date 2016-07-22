@@ -58,7 +58,7 @@ public final class Display extends JPanel {
 
 			g2d.setPaint(Color.GRAY);
 			g2d.setStroke(hudStroke);
-			g2d.draw(view.project(view.hud()));
+			g2d.draw(view.project(view.cross()));
 			g2d.draw(view.project(new Rectangle2D.Double(-5,-5,10,10)));
 		
 		} finally {
