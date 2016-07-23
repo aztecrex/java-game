@@ -69,16 +69,23 @@ public class App extends JFrame implements GameDriver {
 	
 	final MouseAdapter mouser = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-			Point clicked = e.getPoint();
-			Point2D worldClicked = view.world(clicked);
-			System.out.println(worldClicked);
-			view.withCamera(worldClicked);
+			Point mp = e.getPoint();
+			Point2D wmp = view.world(mp);
+			world.withTarget(wmp);
+		};
+		
+		public void mouseEntered(MouseEvent e) {
+			mouseMoved(e);
+		};
+		
+		public void mouseExited(MouseEvent e) {
+			world.withDanger(new Point2D.Double(1000,1000));
 		};
 		
 	    public void mouseMoved(MouseEvent e) {
 			Point mp = e.getPoint();
 			Point2D worldTarget = view.world(mp);
-			world.withTarget(worldTarget);	    	
+			world.withDanger(worldTarget);	    	
 	    }
 	};
 

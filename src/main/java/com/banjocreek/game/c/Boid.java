@@ -24,12 +24,13 @@ public final class Boid implements GameObject {
 	private static final boolean small(Vector2d v, double e) {
 		return v.length() < e;
 	}
-
+	
 	private final Point2D ppos = new Point2D.Double();
 	private double rotation = 0d;
 	private final Vector2d position = new Vector2d();
 	private final Vector2d velocity = new Vector2d();
 	private final Vector2d target = new Vector2d();
+	private final Vector2d danger = new Vector2d();
 	private final Vector2d scratch = new Vector2d();
 	private final Vector2d steering = new Vector2d();
 
@@ -41,14 +42,25 @@ public final class Boid implements GameObject {
 			steering.add(scratch);
 		}
 	}
+	
+	private void avoid() {
+		scratch.set(danger).sub(position); // distance to danger
+		if (small(scratch, 3)) {
+			scratch.normalize().mul(-maxSpeed); // desired velocity
+			scratch.sub(velocity); // steering force a la Reynolds
+			steering.add(scratch);
+		}
+		
+	}
 
 	@Override
 	public void update(double dt) {
 		steering.zero();				// re-compute all steering forces
 		seek();							// seek force
+		avoid();						// run away
 		
-		truncate(scratch, maxForce); 	// no warp drive
-		scratch.mul(inverseMass); 		// steering acceleration
+		truncate(steering, maxForce); 	// no warp drive
+		scratch.set(steering).mul(inverseMass); 		// steering acceleration
 		velocity.add(scratch.mul(dt)); 	// Euler 
 		truncate(velocity, maxSpeed);	// speed limit
 		position.add(scratch.set(velocity).mul(dt)); // Euler again
@@ -63,6 +75,7 @@ public final class Boid implements GameObject {
 	public Boid(Point2D p0) {
 		this.position.set(p0.getX(), p0.getY());
 		this.target.set(this.position);
+		this.danger.set(500,500).add(this.position);
 		this.velocity.zero();
 	}
 
@@ -81,4 +94,9 @@ public final class Boid implements GameObject {
 		return this;
 	}
 
+	public Boid avoid(Point2D target) {
+		this.danger.set(target.getX(),target.getY());
+		return this;
+	}
+	
 }
