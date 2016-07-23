@@ -20,7 +20,7 @@ public final class GameWorld {
 		this.target = new Point2D.Double();
 
 		this.gameObjects = IntStream.range(-2, 3)
-				.mapToObj(n -> new Point2D.Double(n * 1.5, n))
+				.mapToObj(n -> new Point2D.Double(n * 1.5 + .5, n - .5))
 				.map(Boid::new)
 				.collect(Collectors.toList());
 		;
