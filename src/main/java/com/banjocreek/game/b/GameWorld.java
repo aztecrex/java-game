@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.banjocreek.game.c.Boid;
+import com.banjocreek.game.c.GameObject;
 
 public final class GameWorld {
 

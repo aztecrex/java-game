@@ -15,6 +15,8 @@ import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
+import com.banjocreek.game.c.GameObject;
+
 public final class Display extends JPanel {
 
 	private static final long serialVersionUID = 1L;

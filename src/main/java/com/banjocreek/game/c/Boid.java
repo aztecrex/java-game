@@ -5,8 +5,6 @@ import java.util.Random;
 
 import org.joml.Vector2d;
 
-import com.banjocreek.game.b.GameObject;
-
 public final class Boid implements GameObject {
 
 	private static final double inverseMass = 1d / 1d;
