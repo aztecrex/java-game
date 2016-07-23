@@ -5,15 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -25,13 +22,13 @@ public final class Display extends JPanel {
 
 	private final GameWorld world;
 	
-	private final View view = new View().withField(10).withSize(new Dimension(300,200));
+	private final View view;
 	
-	public Display(GameWorld world) {
+	public Display(GameWorld world, View view) {
 		this.world = world;
+		this.view = view;
 		addComponentListener(listener);
 		setPreferredSize(new Dimension(300,200));
-		addMouseListener(mouser);
 	}
 
 	private static final Stroke hudStroke;
@@ -39,13 +36,24 @@ public final class Display extends JPanel {
 		final float[] dash = {3f,7f};
 		hudStroke = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, dash , 0.0f);
 	}
-	private static final Shape model = new Rectangle2D.Double(-.5,-.5, 1, 1);
+	
+	private static final Shape model ; //= new Rectangle2D.Double(-.5,-.5, 1, 1);
+	static {
+		final Path2D m = new Path2D.Double();
+		m.moveTo(-.3, .1);
+		m.lineTo(.3, 0);
+		m.lineTo(-.3, -.1);
+		m.closePath();
+		model = m;
+	}
 	
 	private final Shape element(GameObject obj) {
+		Point2D pos  = obj.position();
+		double rot = obj.rotation();
 		final AffineTransform x = new AffineTransform();
 		// IN REVERSE OF APPLICATION
-		x.translate(obj.position.getX(), obj.position.getY());
-		x.scale(obj.size, obj.size);
+		x.translate(pos.getX(), pos.getY());
+		x.rotate(rot);
 		return x.createTransformedShape(model);
 	}
 	
@@ -58,6 +66,10 @@ public final class Display extends JPanel {
 		g2d.setPaint(Color.BLUE);
 		try {
 			world.gameObjects()
+//				.map(o -> {
+//					System.out.println(o.rotation());
+//					return o;
+//				})
 				.map(this::element)
 				.map(view::project)
 				.forEach(g2d::draw);
@@ -81,15 +93,5 @@ public final class Display extends JPanel {
 		}
 	};
 
-	final MouseListener mouser = new MouseAdapter() {
-		public void mouseClicked(MouseEvent e) {
-			Point clicked = e.getPoint();
-			System.out.println("clicked " + clicked);
-			Point2D world = view.world(clicked);
-			System.out.println("world " + world);
-			view.withCamera(world);
-			Display.this.repaint();
-		};
-	};
 	
 }

@@ -1,30 +1,32 @@
 package com.banjocreek.game.b;
 
-import java.util.ArrayList;
+import java.awt.geom.Point2D;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.function.Function;
 import java.util.stream.Stream;
+
+import com.banjocreek.game.c.Boid;
 
 public final class GameWorld {
 
-	private final List<GameObject> gameObjects = new ArrayList<>();
+	private final List<Boid> gameObjects;
 	
 	public GameWorld() {
-		
-		this.gameObjects.addAll( IntStream.range(-2,3)
-			.mapToDouble(n -> n * .6)
-			.mapToObj(p -> new GameObject(p,p))
-			.collect(Collectors.toList()));
+		gameObjects = Collections.singletonList(new Boid(new Point2D.Double(0,0)));
 	}
 	
 	public Stream<GameObject> gameObjects() {
-		return gameObjects.stream();
+		return gameObjects.stream().map(Function.identity());
 	}
 
 	public void update(long tick, double dt) {
 		gameObjects.forEach(o -> o.update(dt));
 	}
 	
+	public GameWorld withTarget(Point2D tpos) {
+		gameObjects.forEach(o -> o.seek(tpos));
+		return this;
+	}
 	
 }

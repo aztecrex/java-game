@@ -4,12 +4,12 @@ import java.awt.EventQueue;
 
 public final class GameEngine {
 
-	private final GameWorld world;
-	private final Display display;
+	private final GameDriver driver;
+//	private final GameWorld world;
+//	private final Display display;
 	
-	public GameEngine(GameWorld world, Display display) {
-		this.world = world;
-		this.display = display;
+	public GameEngine(GameDriver driver) {
+		this.driver = driver;
 	}
 	
 	private static final int rate = 50;
@@ -22,14 +22,14 @@ public final class GameEngine {
 		long last = System.currentTimeMillis();
 		for(;;) {
 			final long next = last + tickmil;
-			world.update(next, ticksec);
+			driver.update(next, ticksec);
 			while(System.currentTimeMillis() < next) {
 				Thread.sleep(1);
 			}
 			EventQueue.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					display.repaint();
+					driver.reveal();
 				}
 			});
 			last = next;
