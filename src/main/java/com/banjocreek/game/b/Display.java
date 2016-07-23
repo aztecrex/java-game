@@ -12,9 +12,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
+import com.banjocreek.game.c.Boid;
+import com.banjocreek.game.c.Car;
 import com.banjocreek.game.c.GameObject;
 
 public final class Display extends JPanel {
@@ -33,19 +38,26 @@ public final class Display extends JPanel {
 	}
 
 	
-	private static final Shape model ; //= new Rectangle2D.Double(-.5,-.5, 1, 1);
+	private static final Map<Object, Shape> models = new HashMap<>();
 	static {
-		final Path2D m = new Path2D.Double();
-		m.moveTo(-.3, .1);
-		m.lineTo(.3, 0);
-		m.lineTo(-.3, -.1);
-		m.closePath();
-		model = m;
+		final Path2D boid = new Path2D.Double();
+		boid.moveTo(-.3, .1);
+		boid.lineTo(.3, 0);
+		boid.lineTo(-.3, -.1);
+		boid.closePath();
+		models.put(Boid.class, boid);
+		
+		final Rectangle2D car = new Rectangle2D.Double(-.3,-.1, .6, .2);
+		models.put(Car.class, car);
+		
 	}
 	
 	private final Shape element(GameObject obj) {
+		
 		Point2D pos  = obj.position();
 		double rot = obj.rotation();
+		Shape model = models.get(obj.getClass());
+		
 		final AffineTransform x = new AffineTransform();
 		// IN REVERSE OF APPLICATION
 		x.translate(pos.getX(), pos.getY());
