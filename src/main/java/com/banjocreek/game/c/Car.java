@@ -16,7 +16,7 @@ public class Car implements GameObject {
 	private Point2D ppos = new Point2D.Double();
 
 	private double thrust = 0d;
-	private double brake = 1d;
+	private double brake = 0d;
 	private double speed = 0d; 		// not moving
 	private double direction = 0d; 	// face positive x
 	private double steer = 0d;		// forward (left pos, right neg)
@@ -51,14 +51,26 @@ public class Car implements GameObject {
 		return a - TWO_PI * Math.floor((a + Math.PI) / TWO_PI);
 	}
 	
+	private void brake() {
+		brake = 5d;
+		thrust = 0d;
+	}
+
+	private void accelerate(double thrust) {
+		brake = 0d;
+		this.thrust = thrust;
+	}
+	
 	private void seek() {
 		scratch.set(target).sub(position);	// vector to target
 		final double targetDistance = scratch.length();
-		if (targetDistance == 0d) 
-			return;		// unknown change
-		final double targetHeading = Math.atan2(scratch.y,scratch.x);
-		final double adjust = normalizeAngle( targetHeading - direction ) ;
-		steer = Math.max(-maxSteer, Math.min(maxSteer,adjust));
+		if (targetDistance < 1d) { 
+			brake();
+		} else {
+			final double targetHeading = Math.atan2(scratch.y,scratch.x);
+			final double adjust = normalizeAngle( targetHeading - direction ) ;
+			steer = Math.max(-maxSteer, Math.min(maxSteer,adjust));
+		}
 	}
 	
 	
@@ -69,7 +81,8 @@ public class Car implements GameObject {
 		
 		double f = 0;
 		f+= thrust;
-		f-= speed * friction;
+		System.out.println(brake);
+		f-= speed * (friction + brake);
 		
 		speed += f * dt;
 		speed = speed < .01 ? 0 : speed;
@@ -91,7 +104,7 @@ public class Car implements GameObject {
 	private static final double maxThrust = 4d;
 	
 	public Car throttle(double amount) {
-		thrust = Math.max(0, Math.min(maxThrust, amount * maxThrust));
+		accelerate(Math.max(0, Math.min(maxThrust, amount * maxThrust)));
 		return this;
 	}
 
@@ -104,7 +117,7 @@ public class Car implements GameObject {
 	
 	private static final double maxSteer = Math.PI/4;
 	public Car steer(double amount) {
-		steer = Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
+		steer =  Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
 		return this;
 	}
 	
