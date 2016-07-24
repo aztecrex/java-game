@@ -26,6 +26,8 @@ public class Car implements GameObject {
 	private Vector2d frontWheel = new Vector2d();
 	private Vector2d backWheel = new Vector2d();
 	
+	private Vector2d target = new Vector2d();
+	
 	public Car(Point2D p0, double d0) {
 		this.direction = d0;
 		this.position.set(p0.getX(), p0.getY());
@@ -43,24 +45,28 @@ public class Car implements GameObject {
 		return prot;
 	}
 	
+	private static final double TWO_PI = Math.PI * 2d;
+	
+	private static double normalizeAngle(double a) {
+		return a - TWO_PI * Math.floor((a + Math.PI) / TWO_PI);
+	}
+	
+	private void seek() {
+		scratch.set(target).sub(position);	// vector to target
+		final double targetDistance = scratch.length();
+		if (targetDistance == 0d) 
+			return;		// unknown change
+		final double targetHeading = Math.atan2(scratch.y,scratch.x);
+		final double adjust = normalizeAngle( targetHeading - direction ) ;
+		steer = Math.max(-maxSteer, Math.min(maxSteer,adjust));
+	}
 	
 	
-	/*
-
-
-Vector2 frontWheel = carLocation + wheelBase/2 * new Vector2( cos(carHeading) , sin(carHeading) );
-Vector2 backWheel = carLocation - wheelBase/2 * new Vector2( cos(carHeading) , sin(carHeading) );
-
-backWheel += carSpeed * dt * new Vector2(cos(carHeading) , sin(carHeading));
-frontWheel += carSpeed * dt * new Vector2(cos(carHeading+steerAngle) , sin(carHeading+steerAngle));
-
-carLocation = (frontWheel + backWheel) / 2;
-carHeading = atan2( frontWheel.Y - backWheel.Y , frontWheel.X - backWheel.X );
-
-	 */
-
 	@Override
 	public void update(double dt) {
+		
+		seek();
+		
 		double f = 0;
 		f+= thrust;
 		f-= speed * friction;
@@ -102,5 +108,9 @@ carHeading = atan2( frontWheel.Y - backWheel.Y , frontWheel.X - backWheel.X );
 		return this;
 	}
 	
+	public Car seek(Point2D target) {
+		this.target.set(target.getX(), target.getY());
+		return this;
+	}
 
 }

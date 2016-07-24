@@ -31,7 +31,8 @@ public final class GameWorld {
 		
 		cars = Collections.singletonList(new Car(new Point2D.Double(.5,.5), -Math.PI/4));
 
-		boids.forEach(o -> o.seek(target));
+		boids.forEach(o -> o.seek(this.target));
+		cars.forEach(o -> o.seek(this.target));
 	}
 
 	public Stream<GameObject> gameObjects() {
@@ -49,7 +50,8 @@ public final class GameWorld {
 
 	public GameWorld withTarget(Point2D tpos) {
 		this.target = tpos;
-		boids.forEach(o -> o.seek(tpos));
+		boids.forEach(o -> o.seek(this.target));
+		cars.forEach(o -> o.seek(this.target));
 		return this;
 	}
 
