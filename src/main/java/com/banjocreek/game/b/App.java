@@ -71,7 +71,10 @@ public class App extends JFrame implements GameDriver {
 		public void mouseClicked(MouseEvent e) {
 			Point mp = e.getPoint();
 			Point2D wmp = view.world(mp);
-			world.withTarget(wmp);
+			if (e.getButton() == MouseEvent.BUTTON1)
+				world.withTarget(wmp);
+			else
+				world.withoutThrust();
 		};
 		
 		public void mouseEntered(MouseEvent e) {

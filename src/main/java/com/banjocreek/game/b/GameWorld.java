@@ -30,10 +30,10 @@ public final class GameWorld {
 				.collect(Collectors.toList());
 		;
 		
-		cars = Collections.singletonList(new Car(new Point2D.Double(.5,.5), Math.PI/3));
+		cars = Collections.singletonList(new Car(new Point2D.Double(.5,.5), -Math.PI/4));
 
 		boids.forEach(o -> o.seek(target));
-		cars.forEach(o -> o.withThrust());
+		cars.forEach(Car::withThrust);
 	}
 
 	public Stream<GameObject> gameObjects() {
@@ -58,6 +58,10 @@ public final class GameWorld {
 	public GameWorld withDanger(Point2D tpos) {
 		boids.forEach(o -> o.avoid(tpos));
 		return this;
+	}
+
+	public void withoutThrust() {
+		cars.forEach(Car::withoutThrust);
 	}
 
 }
