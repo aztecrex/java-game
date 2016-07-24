@@ -3,6 +3,8 @@ package com.banjocreek.game.b;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
@@ -27,6 +29,7 @@ public class App extends JFrame implements GameDriver {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		display.addMouseListener(mouser);
 		display.addMouseMotionListener(mouser);
+		addKeyListener(keyer);
 	}
 	
 	
@@ -66,21 +69,57 @@ public class App extends JFrame implements GameDriver {
 			}
 		});
 	}
+
+	
 	
 	final MouseAdapter mouser = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
-			Point clicked = e.getPoint();
-			Point2D worldClicked = view.world(clicked);
-			System.out.println(worldClicked);
-			view.withCamera(worldClicked);
+			Point mp = e.getPoint();
+			Point2D wmp = view.world(mp);
+			if (e.getButton() == MouseEvent.BUTTON1)
+				world.withTarget(wmp);
+		};
+		
+		public void mouseEntered(MouseEvent e) {
+			mouseMoved(e);
+		};
+		
+		public void mouseExited(MouseEvent e) {
+			world.withDanger(new Point2D.Double(1000,1000));
 		};
 		
 	    public void mouseMoved(MouseEvent e) {
 			Point mp = e.getPoint();
 			Point2D worldTarget = view.world(mp);
-			world.withTarget(worldTarget);	    	
+			world.withDanger(worldTarget);	    	
 	    }
 	};
 
-	
+	KeyAdapter keyer = new KeyAdapter() {
+		public void keyPressed(KeyEvent e) {
+			char c = e.getKeyChar();
+			if (c >= '0' && c <= '9') {
+				final double m = 1d / 9d;
+				world.withThrottle(m * (c - '0'));
+			} else if (e.isActionKey()) {
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_LEFT:
+					world.withSteering(.5d);
+					break;
+				case KeyEvent.VK_RIGHT:
+					world.withSteering(-.5d);
+					break;
+				case KeyEvent.VK_UP:
+					world.withSteering(0d);
+					world.withThrottle(.5d);
+					break;
+				case KeyEvent.VK_DOWN:
+					world.withSteering(0d);
+					world.withThrottle(0d);
+					break;
+				}
+			}
+		}
+		
+	};
 }

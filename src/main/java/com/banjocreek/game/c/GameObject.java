@@ -1,4 +1,4 @@
-package com.banjocreek.game.b;
+package com.banjocreek.game.c;
 
 import java.awt.geom.Point2D;
 
