@@ -1,7 +1,7 @@
 package com.banjocreek.game.b;
 
 import java.awt.geom.Point2D;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -16,7 +16,10 @@ public final class GameWorld {
 	private final List<Boid> boids;
 
 	private final List<Car> cars;
-	
+
+	private final Car seeking;
+	private final Car driving;
+
 	private Point2D target;
 
 	public GameWorld() {
@@ -28,8 +31,10 @@ public final class GameWorld {
 				.map(Boid::new)
 				.collect(Collectors.toList());
 		;
-		
-		cars = Collections.singletonList(new Car(new Point2D.Double(.5,.5), -Math.PI/4));
+
+		seeking = new Car(new Point2D.Double(3, 3), -Math.PI / 4);
+		driving = new Car(new Point2D.Double(.5, .5), Math.PI / 2);
+		cars = Arrays.asList(seeking, driving);
 
 		boids.forEach(o -> o.seek(this.target));
 		cars.forEach(o -> o.seek(this.target));
@@ -51,7 +56,7 @@ public final class GameWorld {
 	public GameWorld withTarget(Point2D tpos) {
 		this.target = tpos;
 		boids.forEach(o -> o.seek(this.target));
-		cars.forEach(o -> o.seek(this.target));
+		seeking.seek(this.target);
 		return this;
 	}
 
@@ -60,14 +65,18 @@ public final class GameWorld {
 		return this;
 	}
 
-
 	public GameWorld withThrottle(final double amount) {
-		cars.forEach(c -> c.throttle(amount));
+		driving.throttle(amount);
 		return this;
 	}
 
 	public GameWorld withSteering(double amount) {
-		cars.forEach(c -> c.steer(amount));
+		driving.steer(amount);
+		return this;
+	}
+	
+	public GameWorld withStopped() {
+		driving.stop();
 		return this;
 	}
 

@@ -6,7 +6,7 @@ import org.joml.Vector2d;
 
 public class Car implements GameObject {
 
-	private static final double mass = 1d; //
+	private static final double inverseMass = 1d; //
 
 	private static final double friction = .5d;
 	
@@ -27,6 +27,8 @@ public class Car implements GameObject {
 	private Vector2d backWheel = new Vector2d();
 	
 	private Vector2d target = new Vector2d();
+	
+	private boolean seeking = false;
 	
 	public Car(Point2D p0, double d0) {
 		this.direction = d0;
@@ -67,6 +69,7 @@ public class Car implements GameObject {
 		if (targetDistance < 1d) { 
 			brake();
 		} else {
+			accelerate(maxThrust);
 			final double targetHeading = Math.atan2(scratch.y,scratch.x);
 			final double adjust = normalizeAngle( targetHeading - direction ) ;
 			steer = Math.max(-maxSteer, Math.min(maxSteer,adjust));
@@ -76,12 +79,11 @@ public class Car implements GameObject {
 	
 	@Override
 	public void update(double dt) {
-		
-		seek();
+		if (seeking)
+			seek();
 		
 		double f = 0;
-		f+= thrust;
-		System.out.println(brake);
+		f+= thrust * inverseMass;
 		f-= speed * (friction + brake);
 		
 		speed += f * dt;
@@ -104,10 +106,17 @@ public class Car implements GameObject {
 	private static final double maxThrust = 4d;
 	
 	public Car throttle(double amount) {
+		this.seeking = false;
 		accelerate(Math.max(0, Math.min(maxThrust, amount * maxThrust)));
 		return this;
 	}
 
+	public Car stop() {
+		this.seeking = false;
+		brake();
+		return this;
+	}
+	
 	private void publish() {
 		prot = direction;
 		ppos.setLocation(position.x, position.y);
@@ -115,15 +124,19 @@ public class Car implements GameObject {
 	}
 
 	
-	private static final double maxSteer = Math.PI/4;
+	private static final double maxSteer = Math.PI/5;
 	public Car steer(double amount) {
+		this.seeking = false;
 		steer =  Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
 		return this;
 	}
 	
 	public Car seek(Point2D target) {
+		this.seeking = true;
 		this.target.set(target.getX(), target.getY());
 		return this;
 	}
 
+	
+	
 }

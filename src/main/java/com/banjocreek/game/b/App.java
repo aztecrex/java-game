@@ -110,12 +110,12 @@ public class App extends JFrame implements GameDriver {
 					world.withSteering(-.5d);
 					break;
 				case KeyEvent.VK_UP:
-					world.withSteering(0d);
-					world.withThrottle(.5d);
+					world
+						.withSteering(0d)
+						.withThrottle(.6d);
 					break;
 				case KeyEvent.VK_DOWN:
-					world.withSteering(0d);
-					world.withThrottle(0d);
+					world.withStopped();
 					break;
 				}
 			}
