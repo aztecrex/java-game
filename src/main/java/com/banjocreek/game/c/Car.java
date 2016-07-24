@@ -19,7 +19,7 @@ public class Car implements GameObject {
 	private double brake = 1d;
 	private double speed = 0d; 		// not moving
 	private double direction = 0d; 	// face positive x
-	private double steer = 0.3d;		// forward (left pos, right neg)
+	private double steer = 0d;		// forward (left pos, right neg)
 
 	private Vector2d position = new Vector2d();
 	private Vector2d scratch = new Vector2d();
@@ -81,14 +81,11 @@ carHeading = atan2( frontWheel.Y - backWheel.Y , frontWheel.X - backWheel.X );
 		
 		publish();
 	}
+
+	private static final double maxThrust = 4d;
 	
-	public Car withThrust() {
-		this.thrust = 3d;
-		return this;
-	}
-	
-	public Car withoutThrust() {
-		this.thrust = 0d;
+	public Car throttle(double amount) {
+		thrust = Math.max(0, Math.min(maxThrust, amount * maxThrust));
 		return this;
 	}
 
@@ -96,6 +93,13 @@ carHeading = atan2( frontWheel.Y - backWheel.Y , frontWheel.X - backWheel.X );
 		prot = direction;
 		ppos.setLocation(position.x, position.y);
 		
+	}
+
+	
+	private static final double maxSteer = Math.PI/4;
+	public Car steer(double amount) {
+		steer = Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
+		return this;
 	}
 	
 

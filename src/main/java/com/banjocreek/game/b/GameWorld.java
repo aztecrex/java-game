@@ -3,7 +3,6 @@ package com.banjocreek.game.b;
 import java.awt.geom.Point2D;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -33,7 +32,6 @@ public final class GameWorld {
 		cars = Collections.singletonList(new Car(new Point2D.Double(.5,.5), -Math.PI/4));
 
 		boids.forEach(o -> o.seek(target));
-		cars.forEach(Car::withThrust);
 	}
 
 	public Stream<GameObject> gameObjects() {
@@ -60,8 +58,15 @@ public final class GameWorld {
 		return this;
 	}
 
-	public void withoutThrust() {
-		cars.forEach(Car::withoutThrust);
+
+	public GameWorld withThrottle(final double amount) {
+		cars.forEach(c -> c.throttle(amount));
+		return this;
+	}
+
+	public GameWorld withSteering(double amount) {
+		cars.forEach(c -> c.steer(amount));
+		return this;
 	}
 
 }
