@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
 
@@ -53,10 +54,17 @@ public class App extends JFrame implements GameDriver {
 		engine.go();
 	}
 
+	
 	@Override
 	public void update(long next, double dt) {
 		
 		world.update(next, dt);
+		Rectangle2D field = world.field();
+		Point2D center = new Point2D.Double(field.getX() + field.getWidth()/2d, field.getY() + field.getHeight()/2);
+		double vfield = Math.min(10d, Math.max(field.getWidth(), field.getHeight())+1);
+		view
+			.withCamera(center)
+			.withField(Math.max(10d,Math.max(field.getWidth(), field.getHeight()) + 1));
 		
 	}
 
@@ -75,7 +83,7 @@ public class App extends JFrame implements GameDriver {
 	final MouseAdapter mouser = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			Point mp = e.getPoint();
-			Point2D wmp = view.world(mp);
+			Point2D wmp = view.toWorld(mp);
 			if (e.getButton() == MouseEvent.BUTTON1)
 				world.withTarget(wmp);
 		};
@@ -90,7 +98,7 @@ public class App extends JFrame implements GameDriver {
 		
 	    public void mouseMoved(MouseEvent e) {
 			Point mp = e.getPoint();
-			Point2D worldTarget = view.world(mp);
+			Point2D worldTarget = view.toWorld(mp);
 			world.withDanger(worldTarget);	    	
 	    }
 	};

@@ -1,6 +1,7 @@
 package com.banjocreek.game.b;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,4 +81,15 @@ public final class GameWorld {
 		return this;
 	}
 
+	public Rectangle2D field() {
+		
+		final Rectangle2D rval = new Rectangle2D.Double(this.target.getX() - 2.5d, this.target.getY()- 2.5d,5d,5d);
+
+		Stream.concat(boids.stream(), cars.stream())
+			.forEach(o -> rval.add(o.position()));
+		
+		return rval;
+		
+	}
+	
 }

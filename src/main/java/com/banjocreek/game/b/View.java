@@ -30,7 +30,7 @@ public class View {
 		return this;
 	}
 	
-	public Point2D world(Point2D device) {
+	public Point2D toWorld(Point2D device) {
 		try {
 			return projection().inverseTransform(device, null);
 		} catch (NoninvertibleTransformException e) {
