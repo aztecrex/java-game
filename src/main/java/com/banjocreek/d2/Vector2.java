@@ -31,8 +31,20 @@ public final class Vector2 {
         return this.x * this.x + this.y * this.y;
     }
 
+    public Vector2 minus(final Vector2 rhs) {
+        return new Vector2(this.x - rhs.x, this.y - rhs.y);
+    }
+
     public Vector2 plus(final Vector2 rhs) {
         return new Vector2(this.x + rhs.x, this.y + rhs.y);
+    }
+
+    public Vector2 scale(final double amount) {
+        return new Vector2(amount * this.x, amount * this.y);
+    }
+
+    public Vector2 scaleInverse(final double amount) {
+        return new Vector2(this.x / amount, this.y / amount);
     }
 
 }

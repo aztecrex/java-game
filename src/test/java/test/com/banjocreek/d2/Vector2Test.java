@@ -46,14 +46,23 @@ public class Vector2Test {
     }
 
     @Test
+    public void testMinus() {
+        assertEquals(new Vector2(-2.5, 1.5), new Vector2(4.0, 4.0).minus(new Vector2(6.5, 2.5)));
+    }
+
+    @Test
     public void testPlus() {
+        assertEquals(new Vector2(10.5, 6.5), new Vector2(4.0, 4.0).plus(new Vector2(6.5, 2.5)));
+    }
 
-        final Vector2 v = new Vector2(1.5d, 2.5d);
-        final Vector2 actual = v.plus(new Vector2(2.5d, 1.5d));
+    @Test
+    public void testScale() {
+        assertEquals(new Vector2(3.5 * 4.0, 3.5 * -1.7), new Vector2(4.0, -1.7).scale(3.5));
+    }
 
-        assertEquals(4d, actual.x, 0d);
-        assertEquals(4d, actual.x, 0d);
-
+    @Test
+    public void testScaleInverse() {
+        assertEquals(new Vector2(4.0 / 3.5, -1.7 / 3.5), new Vector2(4.0, -1.7).scaleInverse(3.5));
     }
 
 }
