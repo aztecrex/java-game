@@ -11,10 +11,19 @@ public class Vector2Test {
     @Test
     public void testConstruct() {
 
-        final Vector2 v2 = new Vector2(3d, 4.5d);
+        final Vector2 v = new Vector2(3d, 4.5d);
 
-        assertEquals(3d, v2.x, 0d);
-        assertEquals(4.5d, v2.y, 0d);
+        assertEquals(3d, v.x, 0d);
+        assertEquals(4.5d, v.y, 0d);
+
+    }
+
+    @Test
+    public void testHeading() {
+
+        final Vector2 v = new Vector2(12.7, -.153);
+
+        assertEquals(Math.atan2(12.7, -.153), v.heading(), 0.0);
 
     }
 

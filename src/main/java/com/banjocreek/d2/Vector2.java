@@ -19,6 +19,10 @@ public final class Vector2 {
         return Double.hashCode(this.x) & Double.hashCode(this.y) << 16;
     }
 
+    public double heading() {
+        return Math.atan2(this.x, this.y);
+    }
+
     public double mag() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
     }
