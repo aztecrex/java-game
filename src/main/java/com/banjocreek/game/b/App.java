@@ -53,7 +53,7 @@ public class App extends JFrame implements GameDriver {
 		Thread.sleep(1000);
 		engine.go();
 	}
-
+	
 	
 	@Override
 	public void update(long next, double dt) {
@@ -64,7 +64,7 @@ public class App extends JFrame implements GameDriver {
 		double vfield = Math.min(10d, Math.max(field.getWidth(), field.getHeight())+1);
 		view
 			.withCamera(center)
-			.withField(Math.max(10d,Math.max(field.getWidth(), field.getHeight()) + 1));
+			.withField(vfield);
 		
 	}
 

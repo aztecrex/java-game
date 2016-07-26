@@ -87,6 +87,10 @@ public final class Display extends JPanel {
 			g2d.setPaint(Color.BLACK);
 			g2d.fill(view.project(target(world.target())));
 			
+			g2d.setPaint(Color.lightGray);
+			g2d.setStroke(new BasicStroke(2));
+			g2d.draw(view.project(world.field()));
+			
 		} finally {
 			g2d.dispose();
 		}
