@@ -61,7 +61,7 @@ public class App extends JFrame implements GameDriver {
 		world.update(next, dt);
 		Rectangle2D field = world.field();
 		Point2D center = new Point2D.Double(field.getX() + field.getWidth()/2d, field.getY() + field.getHeight()/2);
-		double vfield = Math.min(10d, Math.max(field.getWidth(), field.getHeight())+1);
+		double vfield = Math.max(10d, Math.max(field.getWidth(), field.getHeight())+1);
 		view
 			.withCamera(center)
 			.withField(vfield);
