@@ -9,6 +9,14 @@ public final class Vector2 {
         this.y = y;
     }
 
+    public double distance(final Vector2 other) {
+        return Math.sqrt((other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y));
+    }
+
+    public double distanceSquared(final Vector2 other) {
+        return (other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y);
+    }
+
     @Override
     public boolean equals(final Object obj) {
         return obj instanceof Vector2 && ((Vector2) obj).x == this.x && ((Vector2) obj).y == this.y;

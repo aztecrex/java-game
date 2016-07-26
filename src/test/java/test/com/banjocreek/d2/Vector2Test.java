@@ -19,6 +19,24 @@ public class Vector2Test {
     }
 
     @Test
+    public void testDistance() {
+
+        final Vector2 v1 = new Vector2(3.5, -1.8);
+        final Vector2 v2 = new Vector2(-17, 13.77);
+
+        assertEquals(v1.minus(v2).mag(), v1.distance(v2), 0d);
+    }
+
+    @Test
+    public void testDistanceSquared() {
+
+        final Vector2 v1 = new Vector2(3.5, -1.8);
+        final Vector2 v2 = new Vector2(-17, 13.77);
+
+        assertEquals((v2.x - v1.x) * (v2.x - v1.x) + (v2.y - v1.y) * (v2.y - v1.y), v1.distanceSquared(v2), 0d);
+    }
+
+    @Test
     public void testHeading() {
 
         final Vector2 v = new Vector2(12.7, -.153);
