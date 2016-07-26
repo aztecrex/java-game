@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.banjocreek.d2.Vector2;
+
 public class Vector2Test {
 
 	@Test
@@ -16,6 +18,8 @@ public class Vector2Test {
 
 	}
 
+	
+	
 	@Test
 	public void testPlus() {
 
@@ -26,20 +30,6 @@ public class Vector2Test {
 		assertEquals(4d, actual.x, 0d);
 
 	}
-
+	
 }
 
-class Vector2 {
-
-	public final double x, y;
-
-	public Vector2(double x, double y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	public Vector2 plus(Vector2 rhs) {
-		return new Vector2(this.x + rhs.x, this.y + rhs.y);
-	}
-
-}
