@@ -54,5 +54,10 @@ public final class Vec2 {
     public Vec2 scaleInverse(final double amount) {
         return new Vec2(this.x / amount, this.y / amount);
     }
+    
+    @Override
+    public String toString() {
+        return new StringBuffer().append("(").append(x).append(",").append(y).append(")").toString();
+    }
 
 }
