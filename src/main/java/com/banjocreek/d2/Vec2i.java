@@ -1,25 +1,25 @@
 package com.banjocreek.d2;
 
-public final class Vec2 {
+public final class Vec2i {
 
     public final double x, y;
 
-    public Vec2(final double x, final double y) {
+    public Vec2i(final double x, final double y) {
         this.x = x;
         this.y = y;
     }
 
-    public double distance(final Vec2 other) {
+    public double distance(final Vec2i other) {
         return Math.sqrt((other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y));
     }
 
-    public double distanceSquared(final Vec2 other) {
+    public double distanceSquared(final Vec2i other) {
         return (other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y);
     }
 
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Vec2 && ((Vec2) obj).x == this.x && ((Vec2) obj).y == this.y;
+        return obj instanceof Vec2i && ((Vec2i) obj).x == this.x && ((Vec2i) obj).y == this.y;
     }
 
     @Override
@@ -39,20 +39,20 @@ public final class Vec2 {
         return this.x * this.x + this.y * this.y;
     }
 
-    public Vec2 minus(final Vec2 rhs) {
-        return new Vec2(this.x - rhs.x, this.y - rhs.y);
+    public Vec2i minus(final Vec2i rhs) {
+        return new Vec2i(this.x - rhs.x, this.y - rhs.y);
     }
 
-    public Vec2 plus(final Vec2 rhs) {
-        return new Vec2(this.x + rhs.x, this.y + rhs.y);
+    public Vec2i plus(final Vec2i rhs) {
+        return new Vec2i(this.x + rhs.x, this.y + rhs.y);
     }
 
-    public Vec2 scale(final double amount) {
-        return new Vec2(amount * this.x, amount * this.y);
+    public Vec2i scale(final double amount) {
+        return new Vec2i(amount * this.x, amount * this.y);
     }
 
-    public Vec2 scaleInverse(final double amount) {
-        return new Vec2(this.x / amount, this.y / amount);
+    public Vec2i scaleInverse(final double amount) {
+        return new Vec2i(this.x / amount, this.y / amount);
     }
     
     @Override

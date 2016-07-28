@@ -6,16 +6,16 @@ import java.util.function.Supplier;
 
 import org.joml.Vector2d;
 
-import com.banjocreek.d2.Vec2;
+import com.banjocreek.d2.Vec2i;
 import com.banjocreek.d2m.Vec2m;
 
 public final class Performance {
 
     public static final long iterations = 100000000l;
     
-    public static Vec2 immutable() {
-        Vec2 v = new Vec2(1, 1);
-        Vec2 increment = new Vec2(-.001,.001);
+    public static Vec2i immutable() {
+        Vec2i v = new Vec2i(1, 1);
+        Vec2i increment = new Vec2i(-.001,.001);
         for( long i=0; i < iterations; ++i) {
             v = v.plus(increment);
         }
@@ -54,11 +54,12 @@ public final class Performance {
     
 
     public static void main(String[] args) throws Exception {
+        mutable2();    // warm it up
+        Duration mp2 = profile("mutable2",Performance::mutable2);
+
         mutable();      // warm it up
         Duration mp = profile("mutable", Performance::mutable);
         
-        mutable2();    // warm it up
-        Duration mp2 = profile("mutable2",Performance::mutable2);
 
         immutable(); // warm it up
         Duration ip = profile("immutable", Performance::immutable);

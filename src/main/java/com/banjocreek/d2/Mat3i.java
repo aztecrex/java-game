@@ -1,6 +1,6 @@
 package com.banjocreek.d2;
 
-public final class Mat3 {
+public final class Mat3i {
 
     public final double m00;
     public final double m01;
@@ -12,7 +12,7 @@ public final class Mat3 {
     public final double m21;
     public final double m22;
 
-    public Mat3(final double m00, final double m01, final double m02, final double m10, final double m11,
+    public Mat3i(final double m00, final double m01, final double m02, final double m10, final double m11,
             final double m12, final double m20, final double m21, final double m22) {
         this.m00 = m00;
         this.m01 = m01;

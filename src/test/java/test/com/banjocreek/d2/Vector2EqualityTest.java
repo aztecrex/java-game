@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.banjocreek.d2.Vec2;
+import com.banjocreek.d2.Vec2i;
 
 public class Vector2EqualityTest {
 
-    private static final Vec2 control, copy;
-    private static final Collection<Vec2> diffs;
+    private static final Vec2i control, copy;
+    private static final Collection<Vec2i> diffs;
 
     static {
-        control = new Vec2(12.0, -3.0);
-        copy = new Vec2(12.0, -3.0);
+        control = new Vec2i(12.0, -3.0);
+        copy = new Vec2i(12.0, -3.0);
 
-        diffs = Arrays.asList(new Vec2(13.2, -3.0), new Vec2(12.0, -4.3), new Vec2(0.0, 0.0));
+        diffs = Arrays.asList(new Vec2i(13.2, -3.0), new Vec2i(12.0, -4.3), new Vec2i(0.0, 0.0));
 
     }
 

@@ -2,7 +2,7 @@ package com.banjocreek.d2m;
 
 public final class Vec2m {
 
-    public double x, y;
+    private double x, y;
 
     public Vec2m(final double x, final double y) {
         this.x = x;
@@ -30,8 +30,8 @@ public final class Vec2m {
     }
 
     public Vec2m minus(final Vec2m rhs) {
-        this.x -= rhs.x;
-        this.y -= rhs.y;
+        this.x -= rhs.x();
+        this.y -= rhs.y();
         return this;
     }
 
@@ -52,6 +52,9 @@ public final class Vec2m {
         this.y /= amount;
         return this;
     }
+    
+    public double x() { return x; }
+    public double y() { return y; }
     
     @Override
     public String toString() {
