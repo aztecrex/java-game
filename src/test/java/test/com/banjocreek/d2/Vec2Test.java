@@ -1,6 +1,7 @@
 package test.com.banjocreek.d2;
 
 import static org.junit.Assert.*;
+import static test.com.banjocreek.d2.VectorAssert.*;
 
 import org.junit.Test;
 
@@ -40,61 +41,42 @@ public class Vec2Test {
 
     @Test
     public void testConstructImmutable() {
-        final Vec2 v = Vec2.immutable(5.3, -4.4);
-        assertEquals(5.3, v.x(), 0d);
-        assertEquals(-4.4, v.y(), 0d);
+        assertComponents(x1, y1, Vec2.immutable(x1, y1));
     }
 
     @Test
     public void testConstructMutable() {
-        final Vec2 v = Vec2.mutable(5.3, -4.4);
-        assertEquals(5.3, v.x(), 0d);
-        assertEquals(-4.4, v.y(), 0d);
+        assertComponents(x1, y1, Vec2.mutable(x1, y1));
     }
 
     @Test
     public void testConstructZeroImmutable() {
-        final Vec2 v = Vec2.immutable();
-        assertEquals(0d, v.x(), 0d);
-        assertEquals(0d, v.y(), 0d);
+        assertComponents(0d, 0d, Vec2.immutable());
     }
 
     @Test
     public void testConstructZeroMutable() {
-        final Vec2 v = Vec2.mutable();
-        assertEquals(0d, v.x(), 0d);
-        assertEquals(0d, v.y(), 0d);
+        assertComponents(0d, 0d, Vec2.mutable());
     }
 
     @Test
     public void testDistance() {
-
-        final double x = x1 - x2;
-        final double y = y1 - y2;
-        final double expected = Math.sqrt(x * x + y * y);
-
-        assertEquals(expected, v1.distance(v2), 0d);
+        assertDistance(v1, v2, v1.distance(v2));
     }
 
     @Test
     public void testDistanceSquared() {
-
-        final double x = x1 - x2;
-        final double y = y1 - y2;
-        final double expected = x * x + y * y;
-
-        assertEquals(expected, v1.distanceSquared(v2), 0d);
+        assertDistanceSquared(v1, v2, v1.distanceSquared(v2));
     }
 
     @Test
     public void testEast() {
-        assertEquals(1d, Vec2.east.x(), 0.0);
-        assertEquals(0d, Vec2.east.y(), 0.0);
+        assertComponents(1, 0, Vec2.east);
     }
 
     @Test
     public void testHeading() {
-        assertEquals(Math.atan2(y1, x1), v1.heading(), 0.0);
+        assertHeading(v1, v1.heading());
     }
 
     @Test
@@ -109,20 +91,17 @@ public class Vec2Test {
 
     @Test
     public void testNorth() {
-        assertEquals(0d, Vec2.north.x(), 0.0);
-        assertEquals(1d, Vec2.north.y(), 0.0);
+        assertComponents(0, 1, Vec2.north);
     }
 
     @Test
     public void testSouth() {
-        assertEquals(0d, Vec2.south.x(), 0.0);
-        assertEquals(-1d, Vec2.south.y(), 0.0);
+        assertComponents(0, -1, Vec2.south);
     }
 
     @Test
     public void testWest() {
-        assertEquals(-1d, Vec2.west.x(), 0.0);
-        assertEquals(0d, Vec2.west.y(), 0.0);
+        assertComponents(-1, 0, Vec2.west);
     }
 
 }
