@@ -80,6 +80,13 @@ public class MutableVec2Test {
     }
 
     @Test
+    public void testSafe() {
+        final ImmutableVec2 v = new MutableVec2(1d, -1d).safe();
+        assertEquals(1d, v.x(), 0d);
+        assertEquals(-1d, v.y(), 0d);
+    }
+
+    @Test
     public void testScale() {
         final MutableVec2 v = new MutableVec2(4.0, -4.1);
         final Vec2 expected = new ImmutableVec2(4.0 * scale, -4.1 * scale);
@@ -119,6 +126,22 @@ public class MutableVec2Test {
         assertSame(dest, actual);
         assertEquals(4.0, v.x(), 0.0);
         assertEquals(-4.1, v.y(), 0.0);
+    }
+
+    @Test
+    public void testSet() {
+        final MutableVec2 v = new MutableVec2(1500d, 1500d);
+        v.set(dv);
+        assertEquals(dx, v.x(), 0d);
+        assertEquals(dy, v.y(), 0d);
+    }
+
+    @Test
+    public void testZero() {
+
+        final MutableVec2 v = new MutableVec2(1d, -1d).zero();
+        assertEquals(0d, v.x(), 0d);
+        assertEquals(0d, v.y(), 0d);
     }
 
     private void assertEqualValue(final Vec2 expected, final MutableVec2 actual) {

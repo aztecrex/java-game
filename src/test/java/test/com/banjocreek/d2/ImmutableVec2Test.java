@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.banjocreek.d2.ImmutableVec2;
+import com.banjocreek.d2.MutableVec2;
 import com.banjocreek.d2.Vec2;
 
 public class ImmutableVec2Test {
@@ -37,6 +38,14 @@ public class ImmutableVec2Test {
     @Test
     public void testScaleInverse() {
         assertEquals(new ImmutableVec2(4.0 / 3.5, -1.7 / 3.5), new ImmutableVec2(4.0, -1.7).scaleInverse(3.5));
+    }
+
+    @Test
+    public void testUnsafe() {
+
+        final MutableVec2 v = new ImmutableVec2(3d, -3d).unsafe();
+        assertEquals(3d, v.x(), 0d);
+        assertEquals(-3d, v.y(), 0d);
     }
 
 }

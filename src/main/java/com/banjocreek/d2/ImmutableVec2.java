@@ -2,19 +2,16 @@ package com.banjocreek.d2;
 
 public final class ImmutableVec2 implements Vec2 {
 
+    static final ImmutableVec2 east = new ImmutableVec2(1d, 0d);
+    static final ImmutableVec2 north = new ImmutableVec2(0d, 1d);
+    static final ImmutableVec2 south = new ImmutableVec2(0d, -1d);
+    static final ImmutableVec2 west = new ImmutableVec2(-1d, 0d);
+
     private final double x, y;
 
     public ImmutableVec2(final double x, final double y) {
         this.x = x;
         this.y = y;
-    }
-
-    public double distance(final ImmutableVec2 other) {
-        return Math.sqrt((other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y));
-    }
-
-    public double distanceSquared(final ImmutableVec2 other) {
-        return (other.x - this.x) * (other.x - this.x) + (other.y - this.y) * (other.y - this.y);
     }
 
     @Override
@@ -25,21 +22,6 @@ public final class ImmutableVec2 implements Vec2 {
     @Override
     public int hashCode() {
         return Double.hashCode(this.x) & Double.hashCode(this.y) << 16;
-    }
-
-    @Override
-    public double heading() {
-        return Math.atan2(this.x, this.y);
-    }
-
-    @Override
-    public double magnitude() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-    }
-
-    @Override
-    public double magnitudeSquared() {
-        return this.x * this.x + this.y * this.y;
     }
 
     public ImmutableVec2 minus(final Vec2 rhs) {
@@ -61,6 +43,10 @@ public final class ImmutableVec2 implements Vec2 {
     @Override
     public String toString() {
         return new StringBuffer().append("(").append(this.x).append(",").append(this.y).append(")").toString();
+    }
+
+    public MutableVec2 unsafe() {
+        return new MutableVec2(this.x, this.y);
     }
 
     @Override
