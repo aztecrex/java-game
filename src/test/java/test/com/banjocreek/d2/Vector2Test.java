@@ -34,7 +34,9 @@ public class Vector2Test {
         final ImmutableVec2 v1 = new ImmutableVec2(3.5, -1.8);
         final ImmutableVec2 v2 = new ImmutableVec2(-17, 13.77);
 
-        assertEquals((v2.x() - v1.x()) * (v2.x() - v1.x()) + (v2.y() - v1.y()) * (v2.y() - v1.y()), v1.distanceSquared(v2), 0d);
+        assertEquals((v2.x() - v1.x()) * (v2.x() - v1.x()) + (v2.y() - v1.y()) * (v2.y() - v1.y()),
+                v1.distanceSquared(v2),
+                0d);
     }
 
     @Test

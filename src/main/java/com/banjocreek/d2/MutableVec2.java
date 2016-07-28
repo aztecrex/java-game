@@ -9,24 +9,29 @@ public final class MutableVec2 implements Vec2 {
         this.y = y;
     }
 
+    @Override
     public double distance(final Vec2 other) {
-        return Math.sqrt((other.x() - this.x()) * (other.x() - this.x()) + (other.y() - this.y()) * (other.y() - this.y()));
+        return Math.sqrt((other.x() - x()) * (other.x() - x()) + (other.y() - y()) * (other.y() - y()));
     }
 
+    @Override
     public double distanceSquared(final Vec2 other) {
-        return (other.x() - this.x()) * (other.x() - this.x()) + (other.y() - this.y()) * (other.y() - this.y());
+        return (other.x() - x()) * (other.x() - x()) + (other.y() - y()) * (other.y() - y());
     }
 
+    @Override
     public double heading() {
         return Math.atan2(this.x, this.y);
     }
 
+    @Override
     public double magnitude() {
-        return Math.sqrt(this.x() * this.x() + this.y() * this.y());
+        return Math.sqrt(x() * x() + y() * y());
     }
 
+    @Override
     public double magnitudeSquared() {
-        return this.x() * this.x() + this.y() * this.y();
+        return x() * x() + y() * y();
     }
 
     public MutableVec2 minus(final Vec2 rhs) {
@@ -52,13 +57,20 @@ public final class MutableVec2 implements Vec2 {
         this.y /= amount;
         return this;
     }
-    
-    public double x() { return x; }
-    public double y() { return y; }
-    
+
     @Override
     public String toString() {
-        return new StringBuffer().append("(").append(x).append(",").append(y).append(")").toString();
+        return new StringBuffer().append("(").append(this.x).append(",").append(this.y).append(")").toString();
+    }
+
+    @Override
+    public double x() {
+        return this.x;
+    }
+
+    @Override
+    public double y() {
+        return this.y;
     }
 
 }

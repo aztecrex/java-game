@@ -20,7 +20,9 @@ public class Vector2EqualityTest {
         control = new ImmutableVec2(12.0, -3.0);
         copy = new ImmutableVec2(12.0, -3.0);
 
-        diffs = Arrays.asList(new ImmutableVec2(13.2, -3.0), new ImmutableVec2(12.0, -4.3), new ImmutableVec2(0.0, 0.0));
+        diffs = Arrays.asList(new ImmutableVec2(13.2, -3.0),
+                new ImmutableVec2(12.0, -4.3),
+                new ImmutableVec2(0.0, 0.0));
 
     }
 

@@ -1,36 +1,35 @@
 package com.banjocreek.d2;
 
 public interface Vec2 {
-    double x();
-    double y();
+    static ImmutableVec2 imv(final double x, final double y) {
+        return new ImmutableVec2(x, y);
+    }
 
-    
+    static ImmutableVec2 imv(final Vec2 v) {
+        return new ImmutableVec2(v.x(), v.y());
+    }
+
     default double distance(final Vec2 other) {
-        return Math.sqrt((other.x() - this.x()) * (other.x() - this.x()) + (other.y() - this.y()) * (other.y() - this.y()));
+        return Math.sqrt((other.x() - x()) * (other.x() - x()) + (other.y() - y()) * (other.y() - y()));
     }
 
     default double distanceSquared(final Vec2 other) {
-        return (other.x() - this.x()) * (other.x() - this.x()) + (other.y() - this.y()) * (other.y() - this.y());
+        return (other.x() - x()) * (other.x() - x()) + (other.y() - y()) * (other.y() - y());
     }
 
     default double heading() {
-        return Math.atan2(this.x(), this.y());
+        return Math.atan2(x(), y());
     }
 
     default double magnitude() {
-        return Math.sqrt(this.x() * this.x() + this.y() * this.y());
+        return Math.sqrt(x() * x() + y() * y());
     }
 
     default double magnitudeSquared() {
-        return this.x() * this.x() + this.y() * this.y();
+        return x() * x() + y() * y();
     }
- 
-    
-    static ImmutableVec2 imv(double x, double y) {
-        return new ImmutableVec2(x,y);
-    }
-    
-    static ImmutableVec2 imv(Vec2 v) {
-        return new ImmutableVec2(v.x(), v.y());
-    }
+
+    double x();
+
+    double y();
 }
