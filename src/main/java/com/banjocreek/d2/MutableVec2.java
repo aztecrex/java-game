@@ -35,27 +35,43 @@ public final class MutableVec2 implements Vec2 {
     }
 
     public MutableVec2 minus(final Vec2 rhs) {
-        this.x -= rhs.x();
-        this.y -= rhs.y();
-        return this;
+        return minus(rhs, this);
+    }
+
+    public MutableVec2 minus(final Vec2 rhs, final MutableVec2 dest) {
+        dest.x = this.x - rhs.x();
+        dest.y = this.y - rhs.y();
+        return dest;
     }
 
     public MutableVec2 plus(final Vec2 rhs) {
-        this.x += rhs.x();
-        this.y += rhs.y();
-        return this;
+        return plus(rhs, this);
+    }
+
+    public MutableVec2 plus(final Vec2 rhs, final MutableVec2 dest) {
+        dest.x = this.x + rhs.x();
+        dest.y = this.y + rhs.y();
+        return dest;
     }
 
     public MutableVec2 scale(final double amount) {
-        this.x *= amount;
-        this.y *= amount;
-        return this;
+        return scale(amount, this);
+    }
+
+    public MutableVec2 scale(final double amount, final MutableVec2 dest) {
+        dest.x = this.x * amount;
+        dest.y = this.y * amount;
+        return dest;
     }
 
     public MutableVec2 scaleInverse(final double amount) {
-        this.x /= amount;
-        this.y /= amount;
-        return this;
+        return scaleInverse(amount, this);
+    }
+
+    public MutableVec2 scaleInverse(final double amount, final MutableVec2 dest) {
+        dest.x = this.x / amount;
+        dest.y = this.y / amount;
+        return dest;
     }
 
     @Override

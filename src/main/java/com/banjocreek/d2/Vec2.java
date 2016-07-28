@@ -1,12 +1,20 @@
 package com.banjocreek.d2;
 
 public interface Vec2 {
-    static ImmutableVec2 imv(final double x, final double y) {
+    static ImmutableVec2 immutable(final double x, final double y) {
         return new ImmutableVec2(x, y);
     }
 
-    static ImmutableVec2 imv(final Vec2 v) {
+    static ImmutableVec2 immutable(final Vec2 v) {
         return new ImmutableVec2(v.x(), v.y());
+    }
+
+    static MutableVec2 mutable(final double x, final double y) {
+        return new MutableVec2(x, y);
+    }
+
+    static MutableVec2 mutable(final Vec2 v) {
+        return new MutableVec2(v.x(), v.y());
     }
 
     default double distance(final Vec2 other) {
@@ -18,7 +26,7 @@ public interface Vec2 {
     }
 
     default double heading() {
-        return Math.atan2(x(), y());
+        return Math.atan2(y(), x());
     }
 
     default double magnitude() {

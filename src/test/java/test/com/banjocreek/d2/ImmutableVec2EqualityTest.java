@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.banjocreek.d2.ImmutableVec2;
 import com.banjocreek.d2.Vec2;
 
-public class Vector2EqualityTest {
+public class ImmutableVec2EqualityTest {
 
     private static final Vec2 control, copy;
     private static final Collection<ImmutableVec2> diffs;
