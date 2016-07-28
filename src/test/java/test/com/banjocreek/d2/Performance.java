@@ -6,16 +6,17 @@ import java.util.function.Supplier;
 
 import org.joml.Vector2d;
 
-import com.banjocreek.d2.Vec2i;
-import com.banjocreek.d2m.Vec2m;
+import com.banjocreek.d2.ImmutableVec2;
+import com.banjocreek.d2.MutableVec2;
+import com.banjocreek.d2.Vec2;
 
 public final class Performance {
 
     public static final long iterations = 100000000l;
     
-    public static Vec2i immutable() {
-        Vec2i v = new Vec2i(1, 1);
-        Vec2i increment = new Vec2i(-.001,.001);
+    public static Vec2 immutable() {
+        ImmutableVec2 v = new ImmutableVec2(1, 1);
+        ImmutableVec2 increment = new ImmutableVec2(-.001,.001);
         for( long i=0; i < iterations; ++i) {
             v = v.plus(increment);
         }
@@ -32,9 +33,9 @@ public final class Performance {
         
     }
     
-    public static Vec2m mutable2() {
-        Vec2m v = new Vec2m(1, 1);
-        Vec2m increment = new Vec2m(-.001,.001);
+    public static MutableVec2 mutable2() {
+        MutableVec2 v = new MutableVec2(1, 1);
+        MutableVec2 increment = new MutableVec2(-.001,.001);
         for( long i=0; i < iterations; ++i) {
             v.plus(increment);
         }
