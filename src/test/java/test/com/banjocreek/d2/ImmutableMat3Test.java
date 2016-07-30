@@ -24,4 +24,9 @@ public class ImmutableMat3Test {
         assertEquals(2.2, m.m22(), 0.0);
     }
 
+    @Test
+    public void testPlus() {
+
+    }
+
 }
