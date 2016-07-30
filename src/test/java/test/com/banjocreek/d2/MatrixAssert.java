@@ -51,14 +51,14 @@ public class MatrixAssert {
 
     public static void assertProduct(final Mat3 a, final Mat3 b, final Mat3 actual) {
         assertNear(a.m00() * b.m00() + a.m10() * b.m01() + a.m20() * b.m02(), actual.m00());
-        assertNear(a.m01() * b.m00() + a.m11() * b.m01() + a.m21() * b.m02(), actual.m00());
-        assertNear(a.m02() * b.m00() + a.m12() * b.m01() + a.m22() * b.m02(), actual.m00());
-        assertNear(a.m00() * b.m10() + a.m10() * b.m11() + a.m20() * b.m12(), actual.m00());
-        assertNear(a.m01() * b.m10() + a.m11() * b.m11() + a.m21() * b.m12(), actual.m00());
-        assertNear(a.m02() * b.m10() + a.m12() * b.m11() + a.m22() * b.m12(), actual.m00());
-        assertNear(a.m00() * b.m20() + a.m10() * b.m21() + a.m20() * b.m22(), actual.m00());
-        assertNear(a.m01() * b.m20() + a.m11() * b.m21() + a.m21() * b.m22(), actual.m00());
-        assertNear(a.m02() * b.m20() + a.m12() * b.m21() + a.m22() * b.m22(), actual.m00());
+        assertNear(a.m01() * b.m00() + a.m11() * b.m01() + a.m21() * b.m02(), actual.m01());
+        assertNear(a.m02() * b.m00() + a.m12() * b.m01() + a.m22() * b.m02(), actual.m02());
+        assertNear(a.m00() * b.m10() + a.m10() * b.m11() + a.m20() * b.m12(), actual.m10());
+        assertNear(a.m01() * b.m10() + a.m11() * b.m11() + a.m21() * b.m12(), actual.m11());
+        assertNear(a.m02() * b.m10() + a.m12() * b.m11() + a.m22() * b.m12(), actual.m12());
+        assertNear(a.m00() * b.m20() + a.m10() * b.m21() + a.m20() * b.m22(), actual.m20());
+        assertNear(a.m01() * b.m20() + a.m11() * b.m21() + a.m21() * b.m22(), actual.m21());
+        assertNear(a.m02() * b.m20() + a.m12() * b.m21() + a.m22() * b.m22(), actual.m22());
     }
 
     public static void assertSum(final Mat3 a, final Mat3 b, final Mat3 actual) {

@@ -77,4 +77,21 @@ public class MutableMat3Test {
         assertSame(this.m, actual);
     }
 
+    @Test
+    public void testTimes() {
+
+        final MutableMat3 actual = this.m.times(b);
+        assertProduct(a, b, actual);
+        assertSame(this.m, actual);
+    }
+
+    @Test
+    public void testTimesTo() {
+        final MutableMat3 dest = new MutableMat3();
+        final MutableMat3 actual = this.m.times(b, dest);
+        assertProduct(a, b, actual);
+        assertSame(dest, actual);
+        assertNear(a, this.m);
+    }
+
 }
