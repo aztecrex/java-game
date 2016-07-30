@@ -38,23 +38,6 @@ public final class MutableMat3 implements Mat3 {
 
     }
 
-    public MutableMat3 add(final Mat3 rhs) {
-        return add(rhs, this);
-    }
-
-    public MutableMat3 add(final Mat3 rhs, final MutableMat3 dest) {
-        dest.m00 = this.m00 + rhs.m00();
-        dest.m01 = this.m01 + rhs.m01();
-        dest.m02 = this.m02 + rhs.m02();
-        dest.m10 = this.m10 + rhs.m10();
-        dest.m11 = this.m11 + rhs.m11();
-        dest.m12 = this.m12 + rhs.m12();
-        dest.m20 = this.m20 + rhs.m20();
-        dest.m21 = this.m21 + rhs.m21();
-        dest.m22 = this.m22 + rhs.m22();
-        return dest;
-    }
-
     @Override
     public double m00() {
         return this.m00;
@@ -98,6 +81,40 @@ public final class MutableMat3 implements Mat3 {
     @Override
     public double m22() {
         return this.m22;
+    }
+
+    public MutableMat3 minus(final Mat3 rhs) {
+        return minus(rhs, this);
+    }
+
+    public MutableMat3 minus(final Mat3 rhs, final MutableMat3 dest) {
+        dest.m00 = this.m00 - rhs.m00();
+        dest.m01 = this.m01 - rhs.m01();
+        dest.m02 = this.m02 - rhs.m02();
+        dest.m10 = this.m10 - rhs.m10();
+        dest.m11 = this.m11 - rhs.m11();
+        dest.m12 = this.m12 - rhs.m12();
+        dest.m20 = this.m20 - rhs.m20();
+        dest.m21 = this.m21 - rhs.m21();
+        dest.m22 = this.m22 - rhs.m22();
+        return dest;
+    }
+
+    public MutableMat3 plus(final Mat3 rhs) {
+        return plus(rhs, this);
+    }
+
+    public MutableMat3 plus(final Mat3 rhs, final MutableMat3 dest) {
+        dest.m00 = this.m00 + rhs.m00();
+        dest.m01 = this.m01 + rhs.m01();
+        dest.m02 = this.m02 + rhs.m02();
+        dest.m10 = this.m10 + rhs.m10();
+        dest.m11 = this.m11 + rhs.m11();
+        dest.m12 = this.m12 + rhs.m12();
+        dest.m20 = this.m20 + rhs.m20();
+        dest.m21 = this.m21 + rhs.m21();
+        dest.m22 = this.m22 + rhs.m22();
+        return dest;
     }
 
     public MutableMat3 set(final Mat3 from) {

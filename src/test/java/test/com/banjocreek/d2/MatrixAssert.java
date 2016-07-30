@@ -25,9 +25,9 @@ public class MatrixAssert {
         assertNear(a.m00() - b.m00(), actual.m00());
         assertNear(a.m01() - b.m01(), actual.m01());
         assertNear(a.m02() - b.m02(), actual.m02());
-        assertNear(a.m10() - b.m10(), actual.m00());
-        assertNear(a.m11() - b.m11(), actual.m01());
-        assertNear(a.m12() - b.m12(), actual.m02());
+        assertNear(a.m10() - b.m10(), actual.m10());
+        assertNear(a.m11() - b.m11(), actual.m11());
+        assertNear(a.m12() - b.m12(), actual.m12());
         assertNear(a.m20() - b.m20(), actual.m20());
         assertNear(a.m21() - b.m21(), actual.m21());
         assertNear(a.m22() - b.m22(), actual.m22());

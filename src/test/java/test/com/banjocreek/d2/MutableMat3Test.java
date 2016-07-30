@@ -37,9 +37,26 @@ public class MutableMat3Test {
     }
 
     @Test
+    public void testMinus() {
+
+        final MutableMat3 actual = this.m.minus(b);
+        assertDifference(a, b, actual);
+        assertSame(this.m, actual);
+    }
+
+    @Test
+    public void testMinusTo() {
+        final MutableMat3 dest = new MutableMat3();
+        final MutableMat3 actual = this.m.minus(b, dest);
+        assertDifference(a, b, actual);
+        assertSame(dest, actual);
+        assertNear(a, this.m);
+    }
+
+    @Test
     public void testPlus() {
 
-        final MutableMat3 actual = this.m.add(b);
+        final MutableMat3 actual = this.m.plus(b);
         assertSum(a, b, actual);
         assertSame(this.m, actual);
     }
@@ -47,7 +64,7 @@ public class MutableMat3Test {
     @Test
     public void testPlusTo() {
         final MutableMat3 dest = new MutableMat3();
-        final MutableMat3 actual = this.m.add(b, dest);
+        final MutableMat3 actual = this.m.plus(b, dest);
         assertSum(a, b, actual);
         assertSame(dest, actual);
         assertNear(a, this.m);
