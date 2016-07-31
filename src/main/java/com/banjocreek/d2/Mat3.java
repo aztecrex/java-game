@@ -1,11 +1,10 @@
 package com.banjocreek.d2;
 
 public interface Mat3 {
+
     final static ImmutableMat3 identity = new ImmutableMat3(1, 0, 0, 0, 1, 0, 0, 0, 1);
 
-    static ImmutableMat3 immutable() {
-        return new ImmutableMat3(0, 0, 0, 0, 0, 0, 0, 0, 0);
-    }
+    final static ImmutableMat3 zero = new ImmutableMat3(0, 0, 0, 0, 0, 0, 0, 0, 0);
 
     static ImmutableMat3 immutable(final double m00, final double m01, final double m02, final double m10,
             final double m11, final double m12, final double m20, final double m21, final double m22) {

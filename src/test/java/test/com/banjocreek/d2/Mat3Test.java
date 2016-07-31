@@ -41,12 +41,6 @@ public class Mat3Test {
     }
 
     @Test
-    public void testConstructZeroImmutable() {
-        final ImmutableMat3 actual = Mat3.immutable();
-        assertComponents(0, 0, 0, 0, 0, 0, 0, 0, 0, actual);
-    }
-
-    @Test
     public void testConstructZeroMutable() {
         final MutableMat3 actual = Mat3.mutable();
         assertComponents(0, 0, 0, 0, 0, 0, 0, 0, 0, actual);
@@ -55,6 +49,11 @@ public class Mat3Test {
     @Test
     public void testIdentity() {
         assertComponents(1, 0, 0, 0, 1, 0, 0, 0, 1, Mat3.identity);
+    }
+
+    @Test
+    public void testZero() {
+        assertComponents(0, 0, 0, 0, 0, 0, 0, 0, 0, Mat3.zero);
     }
 
 }
