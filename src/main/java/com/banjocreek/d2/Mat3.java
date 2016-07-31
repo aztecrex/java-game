@@ -1,6 +1,8 @@
 package com.banjocreek.d2;
 
 public interface Mat3 {
+    final static ImmutableMat3 identity = new ImmutableMat3(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
     static ImmutableMat3 immutable() {
         return new ImmutableMat3(0, 0, 0, 0, 0, 0, 0, 0, 0);
     }

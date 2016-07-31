@@ -52,4 +52,9 @@ public class Mat3Test {
         assertComponents(0, 0, 0, 0, 0, 0, 0, 0, 0, actual);
     }
 
+    @Test
+    public void testIdentity() {
+        assertComponents(1, 0, 0, 0, 1, 0, 0, 0, 1, Mat3.identity);
+    }
+
 }
