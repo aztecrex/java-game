@@ -23,6 +23,13 @@ public class MutableMat3Test {
     }
 
     @Test
+    public void testClear() {
+        final MutableMat3 actual = this.m.clear();
+        assertNear(Mat3.zero, actual);
+        assertSame(this.m, actual);
+    }
+
+    @Test
     public void testConstruction() {
 
         final MutableMat3 m = new MutableMat3(0.0, 0.1, 0.2, 1.0, 1.1, 1.2, 2.0, 2.1, 2.2);

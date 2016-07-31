@@ -26,6 +26,19 @@ public final class MutableMat3 implements Mat3 {
 
     }
 
+    public MutableMat3 clear() {
+        this.m00 = 0;
+        this.m01 = 0;
+        this.m02 = 0;
+        this.m10 = 0;
+        this.m11 = 0;
+        this.m12 = 0;
+        this.m20 = 0;
+        this.m21 = 0;
+        this.m22 = 0;
+        return this;
+    }
+
     @Override
     public double m00() {
         return this.m00;
