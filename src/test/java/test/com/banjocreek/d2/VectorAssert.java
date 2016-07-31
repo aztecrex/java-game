@@ -51,6 +51,11 @@ public class VectorAssert {
         assertNear(expected.y(), actual.y());
     }
 
+    public static void assertNormal(final Vec2 a, final Vec2 actual) {
+        assertNear(Math.atan2(a.y(), a.x()), Math.atan2(actual.y(), actual.x()));
+        assertNear(Math.sqrt(actual.x() * actual.x() + actual.y() * actual.y()), 1);
+    }
+
     public static void assertScale(final Vec2 v, final double s, final Vec2 actual) {
         assertNear(v.x() * s, actual.x());
         assertNear(v.y() * s, actual.y());

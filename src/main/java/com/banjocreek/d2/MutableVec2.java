@@ -19,6 +19,17 @@ public final class MutableVec2 implements Vec2 {
         return dest;
     }
 
+    public MutableVec2 normalize() {
+        return normalize(this);
+    }
+
+    public MutableVec2 normalize(final MutableVec2 dest) {
+        final double mag = Math.sqrt(this.x * this.x + this.y * this.y);
+        dest.x = this.x / mag;
+        dest.y = this.y / mag;
+        return dest;
+    }
+
     public MutableVec2 plus(final Vec2 rhs) {
         return plus(rhs, this);
     }

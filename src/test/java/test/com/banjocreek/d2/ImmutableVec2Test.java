@@ -56,6 +56,13 @@ public class ImmutableVec2Test {
     }
 
     @Test
+    public void testNormalize() {
+
+        assertNormal(v1, v.normalize());
+
+    }
+
+    @Test
     public void testPlus() {
         assertSum(v1, v2, v.plus(v2));
     }

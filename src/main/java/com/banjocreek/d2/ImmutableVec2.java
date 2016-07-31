@@ -28,6 +28,11 @@ public final class ImmutableVec2 implements Vec2 {
         return new ImmutableVec2(this.x - rhs.x(), this.y - rhs.y());
     }
 
+    public ImmutableVec2 normalize() {
+        final double mag = Math.sqrt(this.x * this.x + this.y * this.y);
+        return new ImmutableVec2(this.x / mag, this.y / mag);
+    }
+
     public ImmutableVec2 plus(final Vec2 rhs) {
         return new ImmutableVec2(this.x + rhs.x(), this.y + rhs.y());
     }

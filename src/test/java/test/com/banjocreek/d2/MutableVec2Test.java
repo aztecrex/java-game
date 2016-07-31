@@ -71,6 +71,21 @@ public class MutableVec2Test {
     }
 
     @Test
+    public void testNormalize() {
+        final MutableVec2 actual = this.v.normalize();
+        assertNormal(v1, actual);
+        assertSame(this.v, actual);
+    }
+
+    @Test
+    public void testNormalizeTo() {
+        final MutableVec2 actual = this.v.normalize(this.dest);
+        assertNormal(v1, actual);
+        assertSame(this.dest, actual);
+        assertNear(v1, this.v);
+    }
+
+    @Test
     public void testPlus() {
         final MutableVec2 actual = this.v.plus(v2);
         assertSum(v1, v2, actual);
