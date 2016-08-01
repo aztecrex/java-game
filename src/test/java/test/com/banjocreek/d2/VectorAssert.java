@@ -2,6 +2,7 @@ package test.com.banjocreek.d2;
 
 import static org.junit.Assert.*;
 
+import com.banjocreek.d2.Mat3;
 import com.banjocreek.d2.Vec2;
 
 public class VectorAssert {
@@ -69,6 +70,15 @@ public class VectorAssert {
     public static void assertSum(final Vec2 a, final Vec2 b, final Vec2 actual) {
         assertNear(a.x() + b.x(), actual.x());
         assertNear(a.y() + b.y(), actual.y());
+    }
+
+    public static void assertTransform(final Vec2 v, final Mat3 xf, final Vec2 actual) {
+        final double x = xf.m00() * v.x() + xf.m10() * v.y() + xf.m20();
+        final double y = xf.m01() * v.x() + xf.m11() * v.y() + xf.m21();
+        final double w = xf.m02() * v.x() + xf.m12() * v.y() + xf.m22();
+
+        assertNear(x / w, actual.x());
+        assertNear(y / w, actual.y());
     }
 
 }

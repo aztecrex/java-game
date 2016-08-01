@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.banjocreek.d2.Mat3;
 
-final class RandomMat3 implements Mat3 {
+class RandomMat3 implements Mat3 {
     static final Random rng = new Random();
 
     private final double c1[][] = new double[3][3];

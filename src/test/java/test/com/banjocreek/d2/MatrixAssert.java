@@ -2,9 +2,36 @@ package test.com.banjocreek.d2;
 
 import static org.junit.Assert.*;
 
+import com.banjocreek.d2.ImmutableMat3;
 import com.banjocreek.d2.Mat3;
 
 public class MatrixAssert {
+
+    public static void assertAffineRotation(final Mat3 m, final double a, final Mat3 actual) {
+        final double cos = Math.cos(a);
+        final double sin = Math.sin(a);
+        final ImmutableMat3 lhs = Mat3.immutable(cos, sin, 0, -sin, cos, 0, 0, 0, 1);
+
+        assertNear(lhs.times(m), actual);
+    }
+
+    public static void assertAffineScale(final Mat3 m, final double x, final double y, final Mat3 actual) {
+        final ImmutableMat3 lhs = Mat3.immutable(x, 0, 0, 0, y, 0, 0, 0, 1);
+
+        assertNear(lhs.times(m), actual);
+    }
+
+    public static void assertAffineShear(final Mat3 m, final double x, final double y, final Mat3 actual) {
+        final ImmutableMat3 lhs = Mat3.immutable(1, y, 0, x, 1, 0, 0, 0, 1);
+
+        assertNear(lhs.times(m), actual);
+    }
+
+    public static void assertAffineTranslate(final Mat3 m, final double x, final double y, final Mat3 actual) {
+        final ImmutableMat3 lhs = Mat3.immutable(1, 0, 0, 0, 1, 0, x, y, 1);
+
+        assertNear(lhs.times(m), actual);
+    }
 
     public static void assertComponents(final double m00, final double m01, final double m02, final double m10,
             final double m11, final double m12, final double m20, final double m21, final double m22,
