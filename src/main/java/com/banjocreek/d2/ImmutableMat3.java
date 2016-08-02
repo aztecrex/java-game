@@ -71,7 +71,7 @@ public final class ImmutableMat3 implements Mat3 {
         return this.m22;
     }
 
-    public Mat3 minus(final Mat3 rhs) {
+    public ImmutableMat3 minus(final Mat3 rhs) {
         return new ImmutableMat3(this.m00 - rhs.m00(),
                 this.m01 - rhs.m01(),
                 this.m02 - rhs.m02(),
@@ -83,7 +83,7 @@ public final class ImmutableMat3 implements Mat3 {
                 this.m22 - rhs.m22());
     }
 
-    public Mat3 plus(final Mat3 rhs) {
+    public ImmutableMat3 plus(final Mat3 rhs) {
         return new ImmutableMat3(this.m00 + rhs.m00(),
                 this.m01 + rhs.m01(),
                 this.m02 + rhs.m02(),
@@ -95,7 +95,19 @@ public final class ImmutableMat3 implements Mat3 {
                 this.m22 + rhs.m22());
     }
 
-    public Mat3 times(final Mat3 rhs) {
+    public ImmutableMat3 times(final double s) {
+        return new ImmutableMat3(this.m00 * s,
+                this.m01 * s,
+                this.m02 * s,
+                this.m10 * s,
+                this.m11 * s,
+                this.m12 * s,
+                this.m20 * s,
+                this.m21 * s,
+                this.m22 * s);
+    }
+
+    public ImmutableMat3 times(final Mat3 rhs) {
 
         return new ImmutableMat3(this.m00 * rhs.m00() + this.m10 * rhs.m01() + this.m20 * rhs.m02(),
                 this.m01 * rhs.m00() + this.m11 * rhs.m01() + this.m21 * rhs.m02(),

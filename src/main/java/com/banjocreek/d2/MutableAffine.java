@@ -1,6 +1,6 @@
 package com.banjocreek.d2;
 
-public class MutableAffine implements Mat3 {
+public class MutableAffine implements Mat3, NormalizedTransform {
 
     private double m00 = 1, m11 = 1, m10 = 0, m01 = 0, m20 = 0, m21 = 0;
 

@@ -100,6 +100,23 @@ public class MutableMat3Test {
     }
 
     @Test
+    public void testTimesScalar() {
+        final double s = 2.12;
+        final MutableMat3 actual = this.m.times(s);
+        assertProduct(a, s, actual);
+        assertSame(this.m, actual);
+    }
+
+    @Test
+    public void testTimesScalarTo() {
+        final double s = -1.56;
+        final MutableMat3 actual = this.m.times(s, this.dest);
+        assertProduct(a, s, actual);
+        assertSame(this.dest, actual);
+        assertNear(a, this.m);
+    }
+
+    @Test
     public void testTimesTo() {
         final MutableMat3 actual = this.m.times(b, this.dest);
         assertProduct(a, b, actual);

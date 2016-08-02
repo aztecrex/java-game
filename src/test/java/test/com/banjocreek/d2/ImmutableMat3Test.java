@@ -39,4 +39,10 @@ public class ImmutableMat3Test {
         assertProduct(a, b, m.times(b));
     }
 
+    @Test
+    public void testTimesScalar() {
+        final double s = 1.77;
+        assertProduct(a, s, m.times(s));
+    }
+
 }

@@ -156,6 +156,26 @@ public class MutableVec2Test {
     }
 
     @Test
+    public void testTransformNormalized() {
+        final RandomAffine xf = new RandomAffine();
+
+        final MutableVec2 actual = this.v.transformn(xf);
+        assertTransform(v1, xf, actual);
+        assertSame(this.v, actual);
+
+    }
+
+    @Test
+    public void testTransformNormalizedTo() {
+        final RandomAffine xf = new RandomAffine();
+
+        final MutableVec2 actual = this.v.transformn(xf, this.dest);
+        assertTransform(v1, xf, actual);
+        assertSame(this.dest, actual);
+        assertNear(v1, this.v);
+    }
+
+    @Test
     public void testTransformTo() {
         final Mat3 xf = new RandomAffine();
 

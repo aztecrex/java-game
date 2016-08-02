@@ -86,6 +86,13 @@ public class ImmutableVec2Test {
     }
 
     @Test
+    public void testTransformNormalized() {
+        final RandomAffine xf = new RandomAffine();
+
+        assertTransform(v1, xf, v.transformn(xf));
+    }
+
+    @Test
     public void testUnsafe() {
         final MutableVec2 actual = v.unsafe();
         assertNear(v1, actual);

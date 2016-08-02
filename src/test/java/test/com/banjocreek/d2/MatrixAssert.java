@@ -76,6 +76,18 @@ public class MatrixAssert {
         assertNear(expected.m22(), actual.m22());
     }
 
+    public static void assertProduct(final Mat3 m, final double s, final Mat3 actual) {
+        assertNear(m.m00() * s, actual.m00());
+        assertNear(m.m01() * s, actual.m01());
+        assertNear(m.m02() * s, actual.m02());
+        assertNear(m.m10() * s, actual.m10());
+        assertNear(m.m11() * s, actual.m11());
+        assertNear(m.m12() * s, actual.m12());
+        assertNear(m.m20() * s, actual.m20());
+        assertNear(m.m21() * s, actual.m21());
+        assertNear(m.m22() * s, actual.m22());
+    }
+
     public static void assertProduct(final Mat3 a, final Mat3 b, final Mat3 actual) {
         assertNear(a.m00() * b.m00() + a.m10() * b.m01() + a.m20() * b.m02(), actual.m00());
         assertNear(a.m01() * b.m00() + a.m11() * b.m01() + a.m21() * b.m02(), actual.m01());
