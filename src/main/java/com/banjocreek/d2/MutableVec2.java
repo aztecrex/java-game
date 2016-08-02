@@ -75,6 +75,22 @@ public final class MutableVec2 implements Vec2 {
         return new StringBuffer().append("(").append(this.x).append(",").append(this.y).append(")").toString();
     }
 
+    public MutableVec2 transform(final Mat3 xf) {
+        return transform(xf, this);
+    }
+
+    public MutableVec2 transform(final Mat3 xf, final MutableVec2 dest) {
+        final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
+        final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
+        final double w = xf.m02() * this.x + xf.m12() * this.y + xf.m22();
+
+        dest.x = x / w;
+        dest.y = y / w;
+
+        return dest;
+
+    }
+
     @Override
     public double x() {
         return this.x;

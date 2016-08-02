@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.banjocreek.d2.ImmutableVec2;
+import com.banjocreek.d2.Mat3;
 import com.banjocreek.d2.MutableVec2;
 import com.banjocreek.d2.Vec2;
 
@@ -142,6 +143,26 @@ public class MutableVec2Test {
         v.set(v1);
         assertEquals(x1, v.x(), 0d);
         assertEquals(y1, v.y(), 0d);
+    }
+
+    @Test
+    public void testTransform() {
+        final Mat3 xf = new RandomAffine();
+
+        final MutableVec2 actual = this.v.transform(xf);
+        assertTransform(v1, xf, actual);
+        assertSame(this.v, actual);
+
+    }
+
+    @Test
+    public void testTransformTo() {
+        final Mat3 xf = new RandomAffine();
+
+        final MutableVec2 actual = this.v.transform(xf, this.dest);
+        assertTransform(v1, xf, actual);
+        assertSame(this.dest, actual);
+        assertNear(v1, this.v);
     }
 
     @Test
