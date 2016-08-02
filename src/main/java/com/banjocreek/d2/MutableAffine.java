@@ -156,6 +156,11 @@ public class MutableAffine implements Mat3 {
         return dest;
     }
 
+    @Override
+    public String toString() {
+        return Helper.show(this);
+    }
+
     public MutableAffine translate(final double x, final double y) {
         return translate(x, y, this);
     }

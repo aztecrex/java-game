@@ -7,7 +7,7 @@ import com.banjocreek.d2.Vec2;
 
 public class VectorAssert {
 
-    public static final double tol = 1e-15;
+    public static final double tol = 1e-14;
 
     public static void assertComponents(final double x, final double y, final Vec2 actual) {
         assertNear(x, actual.x());

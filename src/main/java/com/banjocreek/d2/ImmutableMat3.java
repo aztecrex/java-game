@@ -108,4 +108,8 @@ public final class ImmutableMat3 implements Mat3 {
                 this.m02 * rhs.m20() + this.m12 * rhs.m21() + this.m22 * rhs.m22());
     }
 
+    @Override
+    public String toString() {
+        return Helper.show(this);
+    }
 }

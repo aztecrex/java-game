@@ -172,4 +172,9 @@ public final class MutableMat3 implements Mat3 {
         return dest;
     }
 
+    @Override
+    public String toString() {
+        return Helper.show(this);
+    }
+
 }
