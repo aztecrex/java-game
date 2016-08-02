@@ -5,6 +5,7 @@ import static test.com.banjocreek.d2.VectorAssert.*;
 import org.junit.Test;
 
 import com.banjocreek.d2.ImmutableVec2;
+import com.banjocreek.d2.Mat3;
 import com.banjocreek.d2.MutableVec2;
 import com.banjocreek.d2.Vec2;
 
@@ -75,6 +76,13 @@ public class ImmutableVec2Test {
     @Test
     public void testScaleInverse() {
         assertScaleInverse(v1, scale, v.scaleInverse(scale));
+    }
+
+    @Test
+    public void testTransform() {
+        final Mat3 xf = new RandomAffine();
+
+        assertTransform(v1, xf, v.transform(xf));
     }
 
     @Test
