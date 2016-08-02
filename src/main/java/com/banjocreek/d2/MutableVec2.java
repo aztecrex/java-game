@@ -75,6 +75,44 @@ public final class MutableVec2 implements Vec2 {
         return new StringBuffer().append("(").append(this.x).append(",").append(this.y).append(")").toString();
     }
 
+    public MutableVec2 transform(final Mat3 xf) {
+        /*
+         * Mat3 and simplified Transform interfaces coincide, potentially get
+         * rid of a few ops
+         */
+        if (xf instanceof SimplifiedTransform) {
+            xfn((SimplifiedTransform) xf, this);
+        } else {
+            xfm(xf, this);
+        }
+        return this;
+    }
+
+    public MutableVec2 transform(final Mat3 xf, final MutableVec2 dest) {
+
+        /*
+         * Mat3 and simplified Transform interfaces coincide, potentially get
+         * rid of a few ops
+         */
+        if (xf instanceof SimplifiedTransform) {
+            xfn((SimplifiedTransform) xf, dest);
+        } else {
+            xfm(xf, dest);
+        }
+        return dest;
+
+    }
+
+    public MutableVec2 transformn(final SimplifiedTransform xf) {
+        xfn(xf, this);
+        return this;
+    }
+
+    public MutableVec2 transformn(final SimplifiedTransform xf, final MutableVec2 dest) {
+        xfn(xf, dest);
+        return dest;
+    }
+
     @Override
     public double x() {
         return this.x;
@@ -88,6 +126,23 @@ public final class MutableVec2 implements Vec2 {
     public MutableVec2 zero() {
         this.x = this.y = 0d;
         return this;
+    }
+
+    private void xfm(final Mat3 xf, final MutableVec2 dest) {
+        final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
+        final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
+        final double w = xf.m02() * this.x + xf.m12() * this.y + xf.m22();
+
+        dest.x = x / w;
+        dest.y = y / w;
+    }
+
+    private void xfn(final SimplifiedTransform xf, final MutableVec2 dest) {
+        final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
+        final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
+
+        dest.x = x;
+        dest.y = y;
     }
 
 }

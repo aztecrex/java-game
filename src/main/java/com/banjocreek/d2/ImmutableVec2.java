@@ -50,6 +50,29 @@ public final class ImmutableVec2 implements Vec2 {
         return new StringBuffer().append("(").append(this.x).append(",").append(this.y).append(")").toString();
     }
 
+    public ImmutableVec2 transform(final Mat3 xf) {
+
+        /*
+         * Mat3 and simplified transform are coincident. potentially save some
+         * ops.
+         */
+        if (xf instanceof SimplifiedTransform)
+            return transformn((SimplifiedTransform) xf);
+
+        final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
+        final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
+        final double w = xf.m02() * this.x + xf.m12() * this.y + xf.m22();
+
+        return new ImmutableVec2(x / w, y / w);
+    }
+
+    public ImmutableVec2 transformn(final SimplifiedTransform xf) {
+        final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
+        final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
+
+        return new ImmutableVec2(x, y);
+    }
+
     public MutableVec2 unsafe() {
         return new MutableVec2(this.x, this.y);
     }

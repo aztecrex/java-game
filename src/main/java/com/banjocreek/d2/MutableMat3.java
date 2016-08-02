@@ -26,6 +26,19 @@ public final class MutableMat3 implements Mat3 {
 
     }
 
+    public MutableMat3 clear() {
+        this.m00 = 0;
+        this.m01 = 0;
+        this.m02 = 0;
+        this.m10 = 0;
+        this.m11 = 0;
+        this.m12 = 0;
+        this.m20 = 0;
+        this.m21 = 0;
+        this.m22 = 0;
+        return this;
+    }
+
     @Override
     public double m00() {
         return this.m00;
@@ -132,6 +145,32 @@ public final class MutableMat3 implements Mat3 {
         return this;
     }
 
+    public MutableMat3 times(final double s) {
+        return times(s, this);
+    }
+
+    public MutableMat3 times(final double s, final MutableMat3 dest) {
+        final double m00 = this.m00 * s;
+        final double m01 = this.m01 * s;
+        final double m02 = this.m02 * s;
+        final double m10 = this.m10 * s;
+        final double m11 = this.m11 * s;
+        final double m12 = this.m12 * s;
+        final double m20 = this.m20 * s;
+        final double m21 = this.m21 * s;
+        final double m22 = this.m22 * s;
+        dest.m00 = m00;
+        dest.m01 = m01;
+        dest.m02 = m02;
+        dest.m10 = m10;
+        dest.m11 = m11;
+        dest.m12 = m12;
+        dest.m20 = m20;
+        dest.m21 = m21;
+        dest.m22 = m22;
+        return dest;
+    }
+
     public MutableMat3 times(final Mat3 rhs) {
         return times(rhs, this);
     }
@@ -157,6 +196,11 @@ public final class MutableMat3 implements Mat3 {
         dest.m21 = m21;
         dest.m22 = m22;
         return dest;
+    }
+
+    @Override
+    public String toString() {
+        return Helper.show(this);
     }
 
 }
