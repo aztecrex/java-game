@@ -3,7 +3,7 @@ package com.banjocreek.d2;
 /**
  * Normalized affine transform. Implied m02, m12 are zero and m22 is 1.
  */
-public interface NormalizedTransform {
+public interface SimplifiedTransform {
 
     double m00();
 

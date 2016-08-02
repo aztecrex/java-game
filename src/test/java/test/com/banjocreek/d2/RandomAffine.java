@@ -1,8 +1,8 @@
 package test.com.banjocreek.d2;
 
-import com.banjocreek.d2.NormalizedTransform;
+import com.banjocreek.d2.SimplifiedTransform;
 
-final class RandomAffine extends RandomMat3 implements NormalizedTransform {
+final class RandomAffine extends RandomMat3 implements SimplifiedTransform {
 
     @Override
     public double m02() {

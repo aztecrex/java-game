@@ -80,8 +80,8 @@ public final class MutableVec2 implements Vec2 {
          * Mat3 and simplified Transform interfaces coincide, potentially get
          * rid of a few ops
          */
-        if (xf instanceof NormalizedTransform) {
-            xfn((NormalizedTransform) xf, this);
+        if (xf instanceof SimplifiedTransform) {
+            xfn((SimplifiedTransform) xf, this);
         } else {
             xfm(xf, this);
         }
@@ -94,8 +94,8 @@ public final class MutableVec2 implements Vec2 {
          * Mat3 and simplified Transform interfaces coincide, potentially get
          * rid of a few ops
          */
-        if (xf instanceof NormalizedTransform) {
-            xfn((NormalizedTransform) xf, dest);
+        if (xf instanceof SimplifiedTransform) {
+            xfn((SimplifiedTransform) xf, dest);
         } else {
             xfm(xf, dest);
         }
@@ -103,12 +103,12 @@ public final class MutableVec2 implements Vec2 {
 
     }
 
-    public MutableVec2 transformn(final NormalizedTransform xf) {
+    public MutableVec2 transformn(final SimplifiedTransform xf) {
         xfn(xf, this);
         return this;
     }
 
-    public MutableVec2 transformn(final NormalizedTransform xf, final MutableVec2 dest) {
+    public MutableVec2 transformn(final SimplifiedTransform xf, final MutableVec2 dest) {
         xfn(xf, dest);
         return dest;
     }
@@ -137,7 +137,7 @@ public final class MutableVec2 implements Vec2 {
         dest.y = y / w;
     }
 
-    private void xfn(final NormalizedTransform xf, final MutableVec2 dest) {
+    private void xfn(final SimplifiedTransform xf, final MutableVec2 dest) {
         final double x = xf.m00() * this.x + xf.m10() * this.y + xf.m20();
         final double y = xf.m01() * this.x + xf.m11() * this.y + xf.m21();
 
