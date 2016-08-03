@@ -139,10 +139,17 @@ public class MutableVec2Test {
 
     @Test
     public void testSet() {
-        final MutableVec2 v = new MutableVec2(1500d, 1500d);
-        v.set(v1);
-        assertEquals(x1, v.x(), 0d);
-        assertEquals(y1, v.y(), 0d);
+        final MutableVec2 actual = this.v.set(v2);
+        assertComponents(x2, y2, actual);
+        assertSame(this.v, actual);
+    }
+
+    @Test
+    public void testSetComponents() {
+        final MutableVec2 actual = this.v.set(x2, y2);
+        assertComponents(x2, y2, actual);
+        assertSame(this.v, actual);
+
     }
 
     @Test

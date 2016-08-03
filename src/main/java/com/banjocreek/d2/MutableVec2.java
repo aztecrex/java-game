@@ -64,6 +64,12 @@ public final class MutableVec2 implements Vec2 {
         return dest;
     }
 
+    public MutableVec2 set(final double x, final double y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
     public MutableVec2 set(final Vec2 from) {
         this.x = from.x();
         this.y = from.y();
