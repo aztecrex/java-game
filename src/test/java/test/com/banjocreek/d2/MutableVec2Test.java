@@ -186,9 +186,52 @@ public class MutableVec2Test {
     }
 
     @Test
+    public void testTruncateHit() {
+
+        final double max = v1.magnitude() / 2d;
+
+        final MutableVec2 actual = this.v.truncate(max);
+        assertTruncated(v1, max, actual);
+        assertSame(this.v, actual);
+
+    }
+
+    @Test
+    public void testTruncateHitTo() {
+
+        final double max = v1.magnitude() / 2d;
+
+        final MutableVec2 actual = this.v.truncate(max, this.dest);
+        assertTruncated(v1, max, actual);
+        assertSame(this.dest, actual);
+        assertNear(v1, this.v);
+    }
+
+    @Test
+    public void testTruncateMiss() {
+
+        final double max = v1.magnitude() + 1d;
+
+        final MutableVec2 actual = this.v.truncate(max);
+        assertTruncated(v1, max, actual);
+        assertSame(this.v, actual);
+
+    }
+
+    @Test
+    public void testTruncateMissTo() {
+
+        final double max = v1.magnitude() + 1d;
+
+        final MutableVec2 actual = this.v.truncate(max, this.dest);
+        assertTruncated(v1, max, actual);
+        assertSame(this.dest, actual);
+        assertNear(v1, this.v);
+    }
+
+    @Test
     public void testZero() {
         this.v.zero();
         assertComponents(0, 0, this.v);
     }
-
 }

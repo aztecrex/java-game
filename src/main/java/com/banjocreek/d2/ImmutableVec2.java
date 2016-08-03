@@ -73,6 +73,15 @@ public final class ImmutableVec2 implements Vec2 {
         return new ImmutableVec2(x, y);
     }
 
+    public ImmutableVec2 truncate(final double max) {
+        final double mag = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (mag > max) {
+            final double s = max / mag;
+            return new ImmutableVec2(this.x * s, this.y * s);
+        } else
+            return this;
+    }
+
     public MutableVec2 unsafe() {
         return new MutableVec2(this.x, this.y);
     }

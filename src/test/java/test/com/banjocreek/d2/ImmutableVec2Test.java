@@ -93,6 +93,18 @@ public class ImmutableVec2Test {
     }
 
     @Test
+    public void testTruncateHit() {
+        final double max = v1.magnitude() / 2d;
+        assertTruncated(v, max, v.truncate(max));
+    }
+
+    @Test
+    public void testTruncateMiss() {
+        final double max = v1.magnitude() + 1d;
+        assertTruncated(v, max, v.truncate(max));
+    }
+
+    @Test
     public void testUnsafe() {
         final MutableVec2 actual = v.unsafe();
         assertNear(v1, actual);

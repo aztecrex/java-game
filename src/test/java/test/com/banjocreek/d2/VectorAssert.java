@@ -81,4 +81,13 @@ public class VectorAssert {
         assertNear(y / w, actual.y());
     }
 
+    public static void assertTruncated(final Vec2 v, final double max, final Vec2 actual) {
+        if (v.magnitude() >= max) {
+            assertNear(max, actual.magnitude());
+        } else {
+            assertNear(v.magnitude(), actual.magnitude());
+        }
+        assertNear(Math.atan2(v.y(), v.x()), Math.atan2(actual.y(), actual.x()));
+    }
+
 }

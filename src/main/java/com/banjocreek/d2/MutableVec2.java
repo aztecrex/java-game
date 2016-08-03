@@ -113,6 +113,32 @@ public final class MutableVec2 implements Vec2 {
         return dest;
     }
 
+    public MutableVec2 truncate(final double max) {
+        final double mag = magnitude();
+        if (mag > max) {
+            final double s = max / mag;
+            this.x *= s;
+            this.y *= s;
+        }
+        return this;
+    }
+
+    public MutableVec2 truncate(final double max, final MutableVec2 dest) {
+        final double mag = magnitude();
+        if (mag == 0d) {
+            dest.x = dest.y = 0d;
+        } else if (mag > max) {
+            final double s = max / mag;
+            dest.x = this.x * s;
+            dest.y = this.y * s;
+        } else {
+            dest.x = this.x;
+            dest.y = this.y;
+        }
+        return dest;
+
+    }
+
     @Override
     public double x() {
         return this.x;
