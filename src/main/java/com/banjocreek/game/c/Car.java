@@ -2,141 +2,143 @@ package com.banjocreek.game.c;
 
 import java.awt.geom.Point2D;
 
-import org.joml.Vector2d;
+import com.banjocreek.d2.MutableVec2;
+import com.banjocreek.d2.Vec2;
 
 public class Car implements GameObject {
 
-	private static final double inverseMass = 1d; //
+    private static final double friction = .5d;
 
-	private static final double friction = .5d;
-	
-	private static final double wheelBase = .5d;
-	
-	private double prot = 0d;
-	private Point2D ppos = new Point2D.Double();
+    private static final double inverseMass = 1d; //
 
-	private double thrust = 0d;
-	private double brake = 0d;
-	private double speed = 0d; 		// not moving
-	private double direction = 0d; 	// face positive x
-	private double steer = 0d;		// forward (left pos, right neg)
+    private static final double maxSteer = Math.PI / 5;
 
-	private Vector2d position = new Vector2d();
-	private Vector2d scratch = new Vector2d();
-	private Vector2d frontWheel = new Vector2d();
-	private Vector2d backWheel = new Vector2d();
-	
-	private Vector2d target = new Vector2d();
-	
-	private boolean seeking = false;
-	
-	public Car(Point2D p0, double d0) {
-		this.direction = d0;
-		this.position.set(p0.getX(), p0.getY());
-		
-		publish();
-	}
+    private static final double maxThrust = 4d;
+    private static final double TWO_PI = Math.PI * 2d;
 
-	@Override
-	public Point2D position() {
-		return ppos;
-	}
+    private static final double wheelBase = .5d;
 
-	@Override
-	public double rotation() {
-		return prot;
-	}
-	
-	private static final double TWO_PI = Math.PI * 2d;
-	
-	private static double normalizeAngle(double a) {
-		return a - TWO_PI * Math.floor((a + Math.PI) / TWO_PI);
-	}
-	
-	private void brake() {
-		brake = 5d;
-		thrust = 0d;
-	}
+    private static double normalizeAngle(final double a) {
+        return a - TWO_PI * Math.floor((a + Math.PI) / TWO_PI);
+    }
 
-	private void accelerate(double thrust) {
-		brake = 0d;
-		this.thrust = thrust;
-	}
-	
-	private void seek() {
-		scratch.set(target).sub(position);	// vector to target
-		final double targetDistance = scratch.length();
-		if (targetDistance < 1d) { 
-			brake();
-		} else {
-			accelerate(maxThrust);
-			final double targetHeading = Math.atan2(scratch.y,scratch.x);
-			final double adjust = normalizeAngle( targetHeading - direction ) ;
-			steer = Math.max(-maxSteer, Math.min(maxSteer,adjust));
-		}
-	}
-	
-	
-	@Override
-	public void update(double dt) {
-		if (seeking)
-			seek();
-		
-		double f = 0;
-		f+= thrust * inverseMass;
-		f-= speed * (friction + brake);
-		
-		speed += f * dt;
-		speed = speed < .01 ? 0 : speed;
-		speed = Math.max(speed, 0);
-		double dspeed = speed * dt;
-		double cd = Math.cos(direction);
-		double sd = Math.sin(direction);
-		backWheel.set(position).add(scratch.set(cd,sd).mul(-wheelBase / 2));
-		frontWheel.set(position).add(scratch.set(cd,sd).mul(wheelBase / 2));
-		backWheel.add(scratch.set(cd,sd).mul(dspeed));
-		frontWheel.add(scratch.set(Math.cos(direction + steer), Math.sin(direction + steer)).mul(dspeed));
-		
-		position.set(scratch.set(frontWheel).add(backWheel).mul(.5));
-		direction = Math.atan2(frontWheel.y - backWheel.y, frontWheel.x - backWheel.x);
-		
-		publish();
-	}
+    private final MutableVec2 backWheel = Vec2.mutable();
+    private double brake = 0d;
+    private double direction = 0d; // face positive x
 
-	private static final double maxThrust = 4d;
-	
-	public Car throttle(double amount) {
-		this.seeking = false;
-		accelerate(Math.max(0, Math.min(maxThrust, amount * maxThrust)));
-		return this;
-	}
+    private final MutableVec2 frontWheel = Vec2.mutable();
+    private final MutableVec2 position = Vec2.mutable();
+    private final Point2D ppos = new Point2D.Double();
+    private double prot = 0d;
 
-	public Car stop() {
-		this.seeking = false;
-		brake();
-		return this;
-	}
-	
-	private void publish() {
-		prot = direction;
-		ppos.setLocation(position.x, position.y);
-		
-	}
+    private final MutableVec2 scratch = Vec2.mutable();
 
-	
-	private static final double maxSteer = Math.PI/5;
-	public Car steer(double amount) {
-		this.seeking = false;
-		steer =  Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
-		return this;
-	}
-	
-	public Car seek(Point2D target) {
-		this.seeking = true;
-		this.target.set(target.getX(), target.getY());
-		return this;
-	}
+    private boolean seeking = false;
 
-	
-	
+    private double speed = 0d; // not moving
+
+    private double steer = 0d; // forward (left pos, right neg)
+
+    private final MutableVec2 target = Vec2.mutable();
+
+    private double thrust = 0d;
+
+    public Car(final Point2D p0, final double d0) {
+        this.direction = d0;
+        this.position.set(p0.getX(), p0.getY());
+
+        publish();
+    }
+
+    @Override
+    public Point2D position() {
+        return this.ppos;
+    }
+
+    @Override
+    public double rotation() {
+        return this.prot;
+    }
+
+    public Car seek(final Point2D target) {
+        this.seeking = true;
+        this.target.set(target.getX(), target.getY());
+        return this;
+    }
+
+    public Car steer(final double amount) {
+        this.seeking = false;
+        this.steer = Math.max(-maxSteer, Math.min(maxSteer, amount * maxSteer));
+        return this;
+    }
+
+    public Car stop() {
+        this.seeking = false;
+        brake();
+        return this;
+    }
+
+    public Car throttle(final double amount) {
+        this.seeking = false;
+        accelerate(Math.max(0, Math.min(maxThrust, amount * maxThrust)));
+        return this;
+    }
+
+    @Override
+    public void update(final double dt) {
+        if (this.seeking) {
+            seek();
+        }
+
+        double f = 0;
+        f += this.thrust * inverseMass;
+        f -= this.speed * (friction + this.brake);
+
+        this.speed += f * dt;
+        this.speed = this.speed < .01 ? 0 : this.speed;
+        this.speed = Math.max(this.speed, 0);
+        final double dspeed = this.speed * dt;
+        final double cd = Math.cos(this.direction);
+        final double sd = Math.sin(this.direction);
+        this.backWheel.set(this.position).plus(this.scratch.set(cd, sd).scale(-wheelBase / 2));
+        this.frontWheel.set(this.position).plus(this.scratch.set(cd, sd).scale(wheelBase / 2));
+        this.backWheel.plus(this.scratch.set(cd, sd).scale(dspeed));
+        this.frontWheel.plus(this.scratch
+                .set(Math.cos(this.direction + this.steer), Math.sin(this.direction + this.steer)).scale(dspeed));
+
+        this.position.set(this.scratch.set(this.frontWheel).plus(this.backWheel).scale(.5));
+        this.direction = Math.atan2(this.frontWheel.y() - this.backWheel.y(), this.frontWheel.x() - this.backWheel.x());
+
+        publish();
+    }
+
+    private void accelerate(final double thrust) {
+        this.brake = 0d;
+        this.thrust = thrust;
+    }
+
+    private void brake() {
+        this.brake = 5d;
+        this.thrust = 0d;
+    }
+
+    private void publish() {
+        this.prot = this.direction;
+        this.ppos.setLocation(this.position.x(), this.position.y());
+
+    }
+
+    private void seek() {
+        this.scratch.set(this.target).minus(this.position); // vector to target
+        final double targetDistance = this.scratch.magnitude();
+        if (targetDistance < 1d) {
+            brake();
+        } else {
+            accelerate(maxThrust);
+            final double targetHeading = this.scratch.heading();
+            final double adjust = normalizeAngle(targetHeading - this.direction);
+            this.steer = Math.max(-maxSteer, Math.min(maxSteer, adjust));
+        }
+    }
+
 }
